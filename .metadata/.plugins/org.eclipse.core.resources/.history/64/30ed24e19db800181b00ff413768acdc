@@ -1,0 +1,5 @@
+package org.transport420.sgmv.resources.beans;
+
+public class CostosMantenimientoFilterBean {
+
+}

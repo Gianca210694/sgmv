@@ -1,0 +1,65 @@
+package org.transport420.sgmv.model;
+
+public class CostoMantenimiento {
+
+	private int idsgmv_costo_mantenimiento;
+	private String cod_costo_mantenimiento;
+	private OrdenMantenimiento ordenMantenimiento;
+	private float costo_total;
+	private String fecha;
+
+	public CostoMantenimiento() {
+
+	}
+
+	public CostoMantenimiento(int idsgmv_costo_mantenimiento, int cod_costo_mantenimiento,
+			OrdenMantenimiento ordenMantenimiento, float costo_total, String fecha) {
+		super();
+		this.idsgmv_costo_mantenimiento = idsgmv_costo_mantenimiento;
+		this.cod_costo_mantenimiento = cod_costo_mantenimiento;
+		this.ordenMantenimiento = ordenMantenimiento;
+		this.costo_total = costo_total;
+		this.fecha = fecha;
+	}
+
+	public int getIdsgmv_costo_mantenimiento() {
+		return idsgmv_costo_mantenimiento;
+	}
+
+	public void setIdsgmv_costo_mantenimiento(int idsgmv_costo_mantenimiento) {
+		this.idsgmv_costo_mantenimiento = idsgmv_costo_mantenimiento;
+	}
+
+	public int getCod_costo_mantenimiento() {
+		return cod_costo_mantenimiento;
+	}
+
+	public void setCod_costo_mantenimiento(int cod_costo_mantenimiento) {
+		this.cod_costo_mantenimiento = cod_costo_mantenimiento;
+	}
+
+	public OrdenMantenimiento getOrdenMantenimiento() {
+		return ordenMantenimiento;
+	}
+
+	public void setOrdenMantenimiento(OrdenMantenimiento ordenMantenimiento) {
+		this.ordenMantenimiento = ordenMantenimiento;
+	}
+
+	public float getCosto_total() {
+		return costo_total;
+	}
+
+	public void setCosto_total(float costo_total) {
+		this.costo_total = costo_total;
+	}
+
+	public String getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
+	}
+
+}

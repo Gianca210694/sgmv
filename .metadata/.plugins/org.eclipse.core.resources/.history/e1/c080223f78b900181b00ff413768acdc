@@ -1,0 +1,91 @@
+package org.transport420.sgmv.servicio;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.List;
+
+import org.transport420.sgmv.dao.interfaces.IVehiculoRepositorio;
+import org.transport420.sgmv.daofactory.DAOFactory;
+import org.transport420.sgmv.model.Vehiculo;
+import org.transport420.sgmv.resources.beans.VehiculosFilterBean;
+
+import jxl.Workbook;
+import jxl.WorkbookSettings;
+import jxl.write.Label;
+import jxl.write.WritableCellFormat;
+import jxl.write.WritableFont;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+
+public class VehiculoServicio {
+
+	IVehiculoRepositorio vehiculoRepositorio = DAOFactory.getDAOFactory(DAOFactory.MYSQL).getVehiculo();
+
+	public List<Vehiculo> listarVehiculos(VehiculosFilterBean filterBean) {
+		try {
+			return vehiculoRepositorio.listarVehiculos(filterBean);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public Vehiculo crearVehiculo(Vehiculo vehiculo) {
+		try {
+			return vehiculoRepositorio.crearVehiculo(vehiculo);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public Vehiculo obtenerVehiculo(int idsgmv_vehiculo) {
+		try {
+			return vehiculoRepositorio.obtenerVehiculo(idsgmv_vehiculo);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public Vehiculo editarVehiculo(Vehiculo vehiculo) {
+		try {
+			return vehiculoRepositorio.editarVehiculo(vehiculo);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public void eliminarVehiculo(int idsgmv_vehiculo) {
+		try {
+			vehiculoRepositorio.eliminarVehiculo(idsgmv_vehiculo);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public byte[] exportarVehiculo(VehiculosFilterBean filterBean, String ruta) {
+		WorkbookSettings conf = new WorkbookSettings();
+		conf.setEncoding("ISO-8859-1");
+		try {
+			WritableWorkbook workBoook = Workbook.createWorkbook(new File(ruta), conf);
+			WritableSheet sheet = workBoook.createSheet("Resultado", 0);
+			WritableFont h = new WritableFont(WritableFont.ARIAL, 11, WritableFont.NO_BOLD);
+			WritableCellFormat hFormat = new WritableCellFormat(h);
+			List<Vehiculo> vehiculos = vehiculoRepositorio.listarVehiculos(filterBean);
+			int filaCount = 0;
+			for (Vehiculo vehiculo : vehiculos) {				
+				sheet.addCell(new Label(0, filaCount, "" + vehiculo.getIdsgmv_vehiculo(), hFormat));	
+				sheet.addCell(new Label(1, filaCount, vehiculo.getPlaca(), hFormat));
+				sheet.addCell(new Label(3, filaCount, vehiculo.getMarca(), hFormat));
+				sheet.addCell(new Label(2, filaCount, vehiculo.getModelo(), hFormat));
+				sheet.addCell(new Label(4, filaCount, vehiculo.getClase(), hFormat));	
+			}
+			workBoook.write();
+			workBoook.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+}
