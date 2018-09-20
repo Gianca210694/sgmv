@@ -1,5 +1,0 @@
-package org.transport420.sgmv.dao.interfaces;
-
-public interface ICostoMantenimientoRepositorio {
-
-}
