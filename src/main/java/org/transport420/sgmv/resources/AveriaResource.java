@@ -20,6 +20,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.transport420.sgmv.model.ReporteFalla;
+import org.transport420.sgmv.resources.beans.FechaFilterBean;
 import org.transport420.sgmv.resources.beans.ReporteFallasFilterBean;
 import org.transport420.sgmv.servicio.AveriaServicio;
 
@@ -54,6 +55,14 @@ public class AveriaResource {
 			System.out.println("error jasper: " + e.getMessage());
 		}
 		return averiaServicio.listarAverias(filterBean);
+	}
+
+	@GET
+	@Path("exportar")
+	@Produces("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+	public Response exportarAveria(@BeanParam FechaFilterBean filterBean) {
+		return Response.ok(averiaServicio.exportarAveria(filterBean))
+				.header("content-disposition", "attachment; filename = averias.xls").build();
 	}
 
 	@POST

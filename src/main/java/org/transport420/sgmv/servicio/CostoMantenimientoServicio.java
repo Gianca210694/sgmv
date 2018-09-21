@@ -11,6 +11,7 @@ import org.transport420.sgmv.dao.interfaces.ICostoMantenimientoRepositorio;
 import org.transport420.sgmv.daofactory.DAOFactory;
 import org.transport420.sgmv.model.CostoMantenimiento;
 import org.transport420.sgmv.resources.beans.CostosMantenimientoFilterBean;
+import org.transport420.sgmv.resources.beans.FechaFilterBean;
 
 import jxl.Workbook;
 import jxl.WorkbookSettings;
@@ -95,9 +96,61 @@ public class CostoMantenimientoServicio {
 							sheet.addCell(new Label(1, filaCount, costo.getVehiculo().getModelo(), hFormat));
 							sheet.addCell(new Label(2, filaCount, costo.getVehiculo().getPlaca(), hFormat));
 							sheet.addCell(new Label(3, filaCount, costo.getCod_costo_mantenimiento(), hFormat));
-							sheet.addCell(new Label(4, filaCount, costo.getOrdenMantenimiento().getCod_mantenimiento_orden(), hFormat));
+							sheet.addCell(new Label(4, filaCount,
+									costo.getOrdenMantenimiento().getCod_mantenimiento_orden(), hFormat));
 							sheet.addCell(new Label(5, filaCount, costo.getFecha(), hFormat));
 							sheet.addCell(new Label(6, filaCount, "" + costo.getCosto_vehiculo(), hFormat));
+							filaCount++;
+						}
+						workBoook.write();
+						workBoook.close();
+					} catch (Exception e) {
+						throw new WebApplicationException(e);
+					}
+				}
+			};
+			return stream;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	public StreamingOutput exportarCostoMantenimiento(FechaFilterBean filterBean) {
+		try {
+
+			final List<CostoMantenimiento> costos = costoMantenimientoRepositorio
+					.reporteCostosMantenimiento(filterBean);
+			StreamingOutput stream = new StreamingOutput() {
+				public void write(OutputStream output) throws IOException, WebApplicationException {
+					try {
+						WorkbookSettings conf = new WorkbookSettings();
+						conf.setEncoding("ISO-8859-1");
+						WritableWorkbook workBoook = Workbook.createWorkbook(output, conf);
+						WritableSheet sheet = workBoook.createSheet("Costos de Mantenimiento", 0);
+						WritableFont h = new WritableFont(WritableFont.ARIAL, 10, WritableFont.NO_BOLD);
+						WritableCellFormat hFormat = new WritableCellFormat(h);
+						hFormat.setBorder(Border.ALL, BorderLineStyle.THIN);
+						hFormat.setWrap(true);
+						int filaCount = 0;
+						sheet.addCell(new Label(0, filaCount, "CÓDIGO COSTO DE MANTENIMIENTO", hFormat));
+						sheet.addCell(new Label(1, filaCount, "CÓDIGO ORDEN DE MANTENIMIENTO", hFormat));
+						sheet.addCell(new Label(2, filaCount, "COSTO TOTAL", hFormat));
+						sheet.addCell(new Label(3, filaCount, "FECHA", hFormat));
+						sheet.addCell(new Label(4, filaCount, "PLACA", hFormat));
+						sheet.addCell(new Label(5, filaCount, "MARCA", hFormat));
+						sheet.addCell(new Label(6, filaCount, "MODELO", hFormat));
+						sheet.addCell(new Label(7, filaCount, "COSTO VEHÍCULO", hFormat));
+						filaCount++;
+						for (CostoMantenimiento costo : costos) {
+							sheet.addCell(new Label(0, filaCount, costo.getCod_costo_mantenimiento(), hFormat));
+							sheet.addCell(new Label(1, filaCount,
+									costo.getOrdenMantenimiento().getCod_mantenimiento_orden(), hFormat));
+							sheet.addCell(new Label(2, filaCount, "" + costo.getCosto_total(), hFormat));
+							sheet.addCell(new Label(3, filaCount, costo.getFecha(), hFormat));
+							sheet.addCell(new Label(4, filaCount, costo.getVehiculo().getPlaca(), hFormat));
+							sheet.addCell(new Label(5, filaCount, costo.getVehiculo().getMarca(), hFormat));
+							sheet.addCell(new Label(6, filaCount, costo.getVehiculo().getModelo(), hFormat));
+							sheet.addCell(new Label(7, filaCount, "" + costo.getCosto_vehiculo(), hFormat));
 							filaCount++;
 						}
 						workBoook.write();

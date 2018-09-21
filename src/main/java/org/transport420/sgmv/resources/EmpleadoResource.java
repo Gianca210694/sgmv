@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.transport420.sgmv.model.Empleado;
+import org.transport420.sgmv.resources.beans.UsuarioReporteFilterBean;
 import org.transport420.sgmv.resources.beans.UsuariosFilterBean;
 import org.transport420.sgmv.servicio.EmpleadoServicio;
 
@@ -41,7 +42,7 @@ public class EmpleadoResource {
 	@GET
 	@Path("exportar")
 	@Produces("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-	public Response exportarVehiculo(@BeanParam UsuariosFilterBean filterBean) {
+	public Response exportarVehiculo(@BeanParam UsuarioReporteFilterBean filterBean) {
 		return Response.ok(empleadoServicio.exportarUsuario(filterBean)).header("content-disposition","attachment; filename = usuarios.xls").build();
 	}
 

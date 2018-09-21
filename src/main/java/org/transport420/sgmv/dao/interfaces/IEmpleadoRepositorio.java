@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.transport420.sgmv.model.Empleado;
 import org.transport420.sgmv.model.Usuario;
+import org.transport420.sgmv.resources.beans.UsuarioReporteFilterBean;
 import org.transport420.sgmv.resources.beans.UsuariosFilterBean;
 
 public interface IEmpleadoRepositorio {
@@ -23,5 +24,7 @@ public interface IEmpleadoRepositorio {
 	public void cambiarContrasena(Usuario usuario) throws Exception;
 
 	public abstract void eliminarEmpleado(int idsgmv_empleado) throws Exception;
+	
+	public List<Empleado> exportarEmpleados(UsuarioReporteFilterBean filterBean) throws Exception;
 
 }

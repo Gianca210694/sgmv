@@ -16,6 +16,7 @@ import org.transport420.sgmv.dao.interfaces.ISeguroRepositorio;
 import org.transport420.sgmv.daofactory.MySqlDAOFactory;
 import org.transport420.sgmv.model.Seguro;
 import org.transport420.sgmv.model.Vehiculo;
+import org.transport420.sgmv.resources.beans.SeguroReporteFilterBean;
 import org.transport420.sgmv.resources.beans.SegurosFilterBean;
 
 public class SeguroRepositorio implements ISeguroRepositorio {
@@ -193,6 +194,51 @@ public class SeguroRepositorio implements ISeguroRepositorio {
 				con.close();
 			}
 		}
+	}
+
+	@Override
+	public List<Seguro> exportarSeguros(SeguroReporteFilterBean filterBean) throws Exception {
+		Connection con = null;
+		List<Seguro> seguros = new ArrayList<>();
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		Calendar gmt = Calendar.getInstance(TimeZone.getTimeZone("GMT-5:00"));
+		try {
+			con = MySqlDAOFactory.obtenerConexion();
+			String query = "{CALL sql10257745.sp_exportar_seguros(?)}";
+			CallableStatement stmt = con.prepareCall(query);
+			stmt.setInt("pEstado", filterBean.getEstado());
+			stmt.execute();
+
+			ResultSet rs = stmt.getResultSet();
+			while (rs.next()) {
+				Seguro seguro = new Seguro();
+				seguro.setIdsgmv_seguro(rs.getInt("idsgmv_seguro"));
+				seguro.setVehiculo(new Vehiculo());
+				seguro.getVehiculo().setIdsgmv_vehiculo(rs.getInt("idsgmv_vehiculo"));
+				seguro.getVehiculo().setMarca(rs.getString("marca"));
+				seguro.getVehiculo().setModelo(rs.getString("modelo"));
+				seguro.getVehiculo().setClase(rs.getString("clase"));
+				seguro.getVehiculo().setPlaca(rs.getString("placa"));
+				seguro.setReferencia(rs.getString("referencia"));
+				seguro.setPoliza(rs.getString("poliza"));
+				seguro.setMoneda(rs.getInt("moneda"));
+				seguro.setPrecio(rs.getFloat("precio"));
+				seguro.setOperacion(rs.getString("operacion"));
+				seguro.setFecha_inicio(df.format(rs.getDate("fecha_inicio", gmt)));
+				seguro.setFecha_fin(df.format(rs.getDate("fecha_fin", gmt)));
+				seguro.setEstado(rs.getInt("estado"));
+				seguros.add(seguro);
+			}
+			rs.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		} finally {
+			if (con != null) {
+				con.close();
+			}
+		}
+		return seguros;
 	}
 
 }

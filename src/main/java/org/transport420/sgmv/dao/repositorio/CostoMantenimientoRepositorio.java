@@ -20,6 +20,7 @@ import org.transport420.sgmv.model.CostoMantenimientoDetalle;
 import org.transport420.sgmv.model.OrdenMantenimiento;
 import org.transport420.sgmv.model.Vehiculo;
 import org.transport420.sgmv.resources.beans.CostosMantenimientoFilterBean;
+import org.transport420.sgmv.resources.beans.FechaFilterBean;
 
 public class CostoMantenimientoRepositorio implements ICostoMantenimientoRepositorio {
 
@@ -45,6 +46,7 @@ public class CostoMantenimientoRepositorio implements ICostoMantenimientoReposit
 						.setIdsgmv_orden_mantenimiento(rs.getInt("idsgmv_orden_mantenimiento"));
 				costoMantenimiento.getOrdenMantenimiento()
 						.setCod_mantenimiento_orden(rs.getString("cod_mantenimiento_orden"));
+				costoMantenimiento.setMoneda(rs.getInt("moneda"));
 				costoMantenimiento.setCosto_total(rs.getFloat("costo_total"));
 				costoMantenimiento.setVehiculo(new Vehiculo());
 				costoMantenimiento.getVehiculo().setPlaca(rs.getString("placa"));
@@ -74,12 +76,13 @@ public class CostoMantenimientoRepositorio implements ICostoMantenimientoReposit
 		try {
 			con = MySqlDAOFactory.obtenerConexion();
 			con.setAutoCommit(false);
-			String queryCostoMantenimiento = "{CALL sql10257745.sp_crear_costo_mantenimiento(?, ?, ?, ?)}";
+			String queryCostoMantenimiento = "{CALL sql10257745.sp_crear_costo_mantenimiento(?, ?, ?, ?, ?)}";
 			String queryDetalle = "{CALL sql10257745.sp_crear_costo_mantenimiento_detalle(?, ?, ?, ?, ?)}";
 
 			CallableStatement stmt = con.prepareCall(queryCostoMantenimiento);
 			stmt.setInt("pIdsgmv_orden_mantenimiento",
 					costoMantenimiento.getOrdenMantenimiento().getIdsgmv_orden_mantenimiento());
+			stmt.setInt("pMoneda", costoMantenimiento.getMoneda());
 			stmt.setFloat("pCostoTotal", costoMantenimiento.getCosto_total());
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
 			LocalDate date = LocalDate.parse(costoMantenimiento.getFecha(), formatter);
@@ -143,6 +146,7 @@ public class CostoMantenimientoRepositorio implements ICostoMantenimientoReposit
 						.setIdsgmv_orden_mantenimiento(rs.getInt("idsgmv_orden_mantenimiento"));
 				costoMantenimiento.getOrdenMantenimiento()
 						.setCod_mantenimiento_orden(rs.getString("cod_mantenimiento_orden"));
+				costoMantenimiento.setMoneda(rs.getInt("moneda"));
 				costoMantenimiento.setCosto_total(rs.getFloat("costo_total"));
 				costoMantenimiento.setFecha(df.format(rs.getDate("fecha", gmt)));
 			}
@@ -181,13 +185,14 @@ public class CostoMantenimientoRepositorio implements ICostoMantenimientoReposit
 		try {
 			con = MySqlDAOFactory.obtenerConexion();
 			con.setAutoCommit(false);
-			String query = "{CALL sql10257745.sp_editar_costo_mantenimiento(?, ?, ?, ?)}";
+			String query = "{CALL sql10257745.sp_editar_costo_mantenimiento(?, ?, ?, ?, ?)}";
 			String queryDetalle = "{CALL sql10257745.sp_crear_costo_mantenimiento_detalle(?, ?, ?, ?, ?)}";
 
 			CallableStatement stmt = con.prepareCall(query);
 			stmt.setInt("pIdsgmv_costo_mantenimiento", costoMantenimiento.getIdsgmv_costo_mantenimiento());
 			stmt.setInt("pIdsgmv_orden_mantenimiento",
 					costoMantenimiento.getOrdenMantenimiento().getIdsgmv_orden_mantenimiento());
+			stmt.setInt("pMoneda", costoMantenimiento.getMoneda());
 			stmt.setFloat("pCosto_total", costoMantenimiento.getCosto_total());
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
 			LocalDate date = LocalDate.parse(costoMantenimiento.getFecha(), formatter);
@@ -242,6 +247,52 @@ public class CostoMantenimientoRepositorio implements ICostoMantenimientoReposit
 				con.close();
 			}
 		}
+	}
+
+	@Override
+	public List<CostoMantenimiento> reporteCostosMantenimiento(FechaFilterBean filterBean)
+			throws Exception {
+		Connection con = null;
+		List<CostoMantenimiento> costosMantenimiento = new ArrayList<>();
+		try {
+			con = MySqlDAOFactory.obtenerConexion();
+			String query = "{CALL sql10257745.sp_exportar_costos_mantenimiento(?)}";
+			CallableStatement stmt = con.prepareCall(query);
+			stmt.setInt("pMeses", filterBean.getMeses());
+			stmt.execute();
+
+			ResultSet rs = stmt.getResultSet();
+			while (rs.next()) {
+				CostoMantenimiento costoMantenimiento = new CostoMantenimiento();
+				costoMantenimiento.setIdsgmv_costo_mantenimiento(rs.getInt("idsgmv_costo_mantenimiento"));
+				costoMantenimiento.setCod_costo_mantenimiento(rs.getString("cod_costo_mantenimiento"));
+				costoMantenimiento.setOrdenMantenimiento(new OrdenMantenimiento());
+				costoMantenimiento.getOrdenMantenimiento()
+						.setIdsgmv_orden_mantenimiento(rs.getInt("idsgmv_orden_mantenimiento"));
+				costoMantenimiento.getOrdenMantenimiento()
+						.setCod_mantenimiento_orden(rs.getString("cod_mantenimiento_orden"));
+				costoMantenimiento.setMoneda(rs.getInt("moneda"));
+				costoMantenimiento.setCosto_total(rs.getFloat("costo_total"));
+				costoMantenimiento.setVehiculo(new Vehiculo());
+				costoMantenimiento.getVehiculo().setPlaca(rs.getString("placa"));
+				costoMantenimiento.getVehiculo().setMarca(rs.getString("marca"));
+				costoMantenimiento.getVehiculo().setModelo(rs.getString("modelo"));
+				costoMantenimiento.setCosto_vehiculo(rs.getFloat("costo_vehiculo"));
+				DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+				Calendar gmt = Calendar.getInstance(TimeZone.getTimeZone("GMT-5:00"));
+				costoMantenimiento.setFecha(df.format(rs.getDate("fecha", gmt)));
+				costosMantenimiento.add(costoMantenimiento);
+			}
+			rs.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		} finally {
+			if (con != null) {
+				con.close();
+			}
+		}
+		return costosMantenimiento;
 	}
 
 }

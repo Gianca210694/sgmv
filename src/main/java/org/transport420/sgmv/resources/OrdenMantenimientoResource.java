@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.transport420.sgmv.model.OrdenMantenimiento;
+import org.transport420.sgmv.resources.beans.FechaFilterBean;
 import org.transport420.sgmv.resources.beans.OrdenesMantenimientoFilterBean;
 import org.transport420.sgmv.servicio.OrdenMantenimientoServicio;
 
@@ -31,6 +32,14 @@ public class OrdenMantenimientoResource {
 	@GET
 	public List<OrdenMantenimiento> listarOrdenesMantenimiento(@BeanParam OrdenesMantenimientoFilterBean filterBean) {
 		return ordenMantenimientoServicio.listarOrdenesMantenimiento(filterBean);
+	}
+
+	@GET
+	@Path("exportar")
+	@Produces("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+	public Response exportarOrdenMantenimiento(@BeanParam FechaFilterBean filterBean) {
+		return Response.ok(ordenMantenimientoServicio.exportarOrdenMantenimiento(filterBean))
+				.header("content-disposition", "attachment; filename = ordenesMantenimiento.xls").build();
 	}
 
 	@POST

@@ -21,6 +21,7 @@ import org.transport420.sgmv.model.Empleado;
 import org.transport420.sgmv.model.Equipo;
 import org.transport420.sgmv.model.OrdenMantenimiento;
 import org.transport420.sgmv.model.ReporteFalla;
+import org.transport420.sgmv.resources.beans.FechaFilterBean;
 import org.transport420.sgmv.resources.beans.OrdenesMantenimientoFilterBean;
 
 public class OrdenMantenimientoRepositorio implements IOrdenMantenimientoRepositorio {
@@ -373,6 +374,52 @@ public class OrdenMantenimientoRepositorio implements IOrdenMantenimientoReposit
 				con.close();
 			}
 		}
+	}
+
+	@Override
+	public List<OrdenMantenimiento> reporteOrdenesMantenimiento(FechaFilterBean filterBean)
+			throws Exception {
+		Connection con = null;
+		List<OrdenMantenimiento> ordenesMantenimiento = new ArrayList<>();
+		try {
+			con = MySqlDAOFactory.obtenerConexion();
+			String query = "{CALL sql10257745.sp_exportar_ordenes_mantenimiento(?)}";
+			CallableStatement stmt = con.prepareCall(query);
+			stmt.setInt("pMeses", filterBean.getMeses());
+			stmt.execute();
+
+			ResultSet rs = stmt.getResultSet();
+			while (rs.next()) {
+				OrdenMantenimiento ordenMantenimiento = new OrdenMantenimiento();
+				ordenMantenimiento.setIdsgmv_orden_mantenimiento(rs.getInt("idsgmv_orden_mantenimiento"));
+				ordenMantenimiento.setCod_mantenimiento_orden(rs.getString("cod_mantenimiento_orden"));
+				ordenMantenimiento.setTipo_mantenimiento(rs.getInt("tipo_mantenimiento"));
+				ordenMantenimiento.setPrioridad(rs.getInt("prioridad"));
+				DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+				Calendar gmt = Calendar.getInstance(TimeZone.getTimeZone("GMT-5:00"));
+				ordenMantenimiento.setFecha(df.format(rs.getDate("fecha", gmt)));
+				ordenMantenimiento.setKilometraje(rs.getFloat("kilometraje"));
+				ordenMantenimiento.setAveria(new ReporteFalla());
+				ordenMantenimiento.getAveria().setIdsgmv_reporte_falla(rs.getInt("idsgmv_reporte_falla"));
+				ordenMantenimiento.getAveria().setCod_reporte(rs.getString("cod_reporte"));
+				ordenMantenimiento.setEmpleado(new Empleado());
+				ordenMantenimiento.getEmpleado().setIdsgmv_empleado(rs.getInt("idsgmv_empleado"));
+				ordenMantenimiento.getEmpleado().setNombres(rs.getString("nombres_empleado"));
+				ordenMantenimiento.getEmpleado().setApe_paterno(rs.getString("ape_pat_empleado"));
+				ordenMantenimiento.setEstado(rs.getInt("estado"));
+				ordenMantenimiento.setObservaciones(rs.getString("observaciones"));
+				ordenesMantenimiento.add(ordenMantenimiento);
+			}
+			rs.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		} finally {
+			if (con != null) {
+				con.close();
+			}
+		}
+		return ordenesMantenimiento;
 	}
 
 }

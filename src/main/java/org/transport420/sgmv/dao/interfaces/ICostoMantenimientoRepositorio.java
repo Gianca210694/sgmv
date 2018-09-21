@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.transport420.sgmv.model.CostoMantenimiento;
 import org.transport420.sgmv.resources.beans.CostosMantenimientoFilterBean;
+import org.transport420.sgmv.resources.beans.FechaFilterBean;
 
 public interface ICostoMantenimientoRepositorio {
 
@@ -17,5 +18,7 @@ public interface ICostoMantenimientoRepositorio {
 	public abstract CostoMantenimiento editarCostoMantenimiento(CostoMantenimiento costoMantenimiento) throws Exception;
 
 	public abstract void eliminarCostoMantenimiento(int idsgmv_costo_mantenimiento) throws Exception;
+
+	public List<CostoMantenimiento> reporteCostosMantenimiento(FechaFilterBean filterBean) throws Exception;
 
 }

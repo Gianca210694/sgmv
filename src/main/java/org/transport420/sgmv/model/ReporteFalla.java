@@ -11,7 +11,8 @@ public class ReporteFalla {
 	private String cod_reporte;
 	private String fecha;
 	private float kilometraje;
-	private String descripcion;
+	private String procedencia;
+	private String destino;
 	private String observaciones;
 	private Vehiculo remolque;
 	private Vehiculo semiremolque;
@@ -26,7 +27,7 @@ public class ReporteFalla {
 	}
 
 	public ReporteFalla(int idsgmv_reporte_falla, String cod_reporte, String fecha, float kilometraje,
-			String descripcion, String observaciones, Vehiculo remolque, Vehiculo semiremolque, Empleado empleado,
+			String procedencia, String destino, String observaciones, Vehiculo remolque, Vehiculo semiremolque, Empleado empleado,
 			Empleado conductor, int estado, List<ReporteFallaComponentePrincipal> componentes_principales,
 			List<ReporteFallaComponenteLlanta> componentes_llantas) {
 		super();
@@ -34,7 +35,8 @@ public class ReporteFalla {
 		this.cod_reporte = cod_reporte;
 		this.fecha = fecha;
 		this.kilometraje = kilometraje;
-		this.descripcion = descripcion;
+		this.procedencia = procedencia;
+		this.destino = destino;
 		this.observaciones = observaciones;
 		this.remolque = remolque;
 		this.semiremolque = semiremolque;
@@ -77,12 +79,20 @@ public class ReporteFalla {
 		this.kilometraje = kilometraje;
 	}
 
-	public String getDescripcion() {
-		return descripcion;
+	public String getProcedencia() {
+		return procedencia;
 	}
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
+	public void setProcedencia(String procedencia) {
+		this.procedencia = procedencia;
+	}
+
+	public String getDestino() {
+		return destino;
+	}
+
+	public void setDestino(String destino) {
+		this.destino = destino;
 	}
 
 	public String getObservaciones() {

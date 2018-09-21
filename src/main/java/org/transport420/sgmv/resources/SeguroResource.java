@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.transport420.sgmv.model.Seguro;
+import org.transport420.sgmv.resources.beans.SeguroReporteFilterBean;
 import org.transport420.sgmv.resources.beans.SegurosFilterBean;
 import org.transport420.sgmv.servicio.SeguroServicio;
 
@@ -36,7 +37,7 @@ public class SeguroResource {
 	@GET
 	@Path("exportar")
 	@Produces("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-	public Response exportarSeguro(@BeanParam SegurosFilterBean filterBean) {
+	public Response exportarSeguro(@BeanParam SeguroReporteFilterBean filterBean) {
 		return Response.ok(seguroServicio.exportarSeguro(filterBean)).header("content-disposition","attachment; filename = seguros.xls").build();
 	}
 

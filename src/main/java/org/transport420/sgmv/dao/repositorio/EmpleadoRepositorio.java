@@ -17,6 +17,7 @@ import org.transport420.sgmv.daofactory.MySqlDAOFactory;
 import org.transport420.sgmv.model.Empleado;
 import org.transport420.sgmv.model.Rol;
 import org.transport420.sgmv.model.Usuario;
+import org.transport420.sgmv.resources.beans.UsuarioReporteFilterBean;
 import org.transport420.sgmv.resources.beans.UsuariosFilterBean;
 
 public class EmpleadoRepositorio implements IEmpleadoRepositorio {
@@ -288,6 +289,54 @@ public class EmpleadoRepositorio implements IEmpleadoRepositorio {
 				con.close();
 			}
 		}
+	}
+
+	@Override
+	public List<Empleado> exportarEmpleados(UsuarioReporteFilterBean filterBean) throws Exception {
+		Connection con = null;
+		List<Empleado> empleados = new ArrayList<>();
+		try {
+			con = MySqlDAOFactory.obtenerConexion();
+			String query = "{CALL sql10257745.sp_exportar_empleados(?)}";
+			CallableStatement stmt = con.prepareCall(query);
+			stmt.setInt("pEstado", filterBean.getEstado());
+			stmt.execute();
+
+			ResultSet rs = stmt.getResultSet();
+			while (rs.next()) {
+				Empleado empleado = new Empleado();
+				empleado.setIdsgmv_empleado(rs.getInt("idsgmv_empleado"));
+				empleado.setNombres(rs.getString("nombres"));
+				empleado.setApe_paterno(rs.getString("ape_paterno"));
+				empleado.setApe_materno(rs.getString("ape_materno"));
+				empleado.setDni(rs.getString("dni"));
+				empleado.setSexo(rs.getInt("sexo"));
+				DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+				Calendar gmt = Calendar.getInstance(TimeZone.getTimeZone("GMT-5:00"));
+				empleado.setFecha_nacimiento(df.format(rs.getDate("fecha_nacimiento", gmt)));
+				empleado.setEmail(rs.getString("email"));
+				empleado.setTelefono(rs.getString("telefono"));
+				empleado.setBrevete(rs.getString("brevete"));
+				empleado.setEstado(rs.getInt("estado"));
+				empleado.setUsuario(new Usuario());
+				empleado.getUsuario().setIdsgmv_empleado(rs.getInt("idsgmv_usuario"));
+				empleado.getUsuario().setUsuario(rs.getString("usuario"));
+				empleado.setRol(new Rol());
+				empleado.getRol().setIdsgmv_rol(rs.getInt("idsgmv_rol"));
+				empleado.getRol().setRol(rs.getString("rol"));
+				empleado.getRol().setDescripcion(rs.getString("descripcion"));
+				empleados.add(empleado);
+			}
+			rs.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		} finally {
+			if (con != null) {
+				con.close();
+			}
+		}
+		return empleados;
 	}
 
 }

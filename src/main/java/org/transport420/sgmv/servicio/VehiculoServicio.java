@@ -10,6 +10,7 @@ import javax.ws.rs.core.StreamingOutput;
 import org.transport420.sgmv.dao.interfaces.IVehiculoRepositorio;
 import org.transport420.sgmv.daofactory.DAOFactory;
 import org.transport420.sgmv.model.Vehiculo;
+import org.transport420.sgmv.resources.beans.VehiculoReporteFilterBean;
 import org.transport420.sgmv.resources.beans.VehiculosFilterBean;
 
 import jxl.Workbook;
@@ -82,10 +83,10 @@ public class VehiculoServicio {
 		}
 	}
 
-	public StreamingOutput exportarVehiculo(VehiculosFilterBean filterBean) {
+	public StreamingOutput exportarVehiculo(VehiculoReporteFilterBean filterBean) {
 		try {
 
-			final List<Vehiculo> vehiculos = vehiculoRepositorio.listarVehiculos(filterBean);
+			final List<Vehiculo> vehiculos = vehiculoRepositorio.exportarVehiculos(filterBean);
 			StreamingOutput stream = new StreamingOutput() {
 				public void write(OutputStream output) throws IOException, WebApplicationException {
 					try {

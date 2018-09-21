@@ -11,6 +11,7 @@ import org.transport420.sgmv.dao.interfaces.IEmpleadoRepositorio;
 import org.transport420.sgmv.daofactory.DAOFactory;
 import org.transport420.sgmv.model.Empleado;
 import org.transport420.sgmv.model.Usuario;
+import org.transport420.sgmv.resources.beans.UsuarioReporteFilterBean;
 import org.transport420.sgmv.resources.beans.UsuariosFilterBean;
 
 import jxl.Workbook;
@@ -91,10 +92,10 @@ public class EmpleadoServicio {
 		}
 	}
 
-	public StreamingOutput exportarUsuario(UsuariosFilterBean filterBean) {
+	public StreamingOutput exportarUsuario(UsuarioReporteFilterBean filterBean) {
 		try {
 
-			final List<Empleado> empleados = empleadoRepositorio.listarEmpleados(filterBean);
+			final List<Empleado> empleados = empleadoRepositorio.exportarEmpleados(filterBean);
 			StreamingOutput stream = new StreamingOutput() {
 				public void write(OutputStream output) throws IOException, WebApplicationException {
 					try {

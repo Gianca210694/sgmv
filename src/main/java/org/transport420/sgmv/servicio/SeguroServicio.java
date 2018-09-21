@@ -10,6 +10,7 @@ import javax.ws.rs.core.StreamingOutput;
 import org.transport420.sgmv.dao.interfaces.ISeguroRepositorio;
 import org.transport420.sgmv.daofactory.DAOFactory;
 import org.transport420.sgmv.model.Seguro;
+import org.transport420.sgmv.resources.beans.SeguroReporteFilterBean;
 import org.transport420.sgmv.resources.beans.SegurosFilterBean;
 
 import jxl.Workbook;
@@ -66,10 +67,10 @@ public class SeguroServicio {
 		}
 	}
 
-	public StreamingOutput exportarSeguro(SegurosFilterBean filterBean) {
+	public StreamingOutput exportarSeguro(SeguroReporteFilterBean filterBean) {
 		try {
 
-			final List<Seguro> seguros = seguroRepositorio.listarSeguros(filterBean);
+			final List<Seguro> seguros = seguroRepositorio.exportarSeguros(filterBean);
 			StreamingOutput stream = new StreamingOutput() {
 				public void write(OutputStream output) throws IOException, WebApplicationException {
 					try {

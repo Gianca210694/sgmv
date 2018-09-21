@@ -9,6 +9,7 @@ import java.util.List;
 import org.transport420.sgmv.dao.interfaces.IVehiculoRepositorio;
 import org.transport420.sgmv.daofactory.MySqlDAOFactory;
 import org.transport420.sgmv.model.Vehiculo;
+import org.transport420.sgmv.resources.beans.VehiculoReporteFilterBean;
 import org.transport420.sgmv.resources.beans.VehiculosFilterBean;
 
 public class VehiculoRepositorio implements IVehiculoRepositorio {
@@ -262,6 +263,48 @@ public class VehiculoRepositorio implements IVehiculoRepositorio {
 				con.close();
 			}
 		}
+	}
+
+	@Override
+	public List<Vehiculo> exportarVehiculos(VehiculoReporteFilterBean filterBean) throws Exception {
+		Connection con = null;
+		List<Vehiculo> vehiculos = new ArrayList<>();
+		try {
+			con = MySqlDAOFactory.obtenerConexion();
+			String query = "{CALL sql10257745.sp_exportar_vehiculos(?)}";
+			CallableStatement stmt = con.prepareCall(query);
+			stmt.setInt("pEstado", filterBean.getEstado());
+			stmt.execute();
+
+			ResultSet rs = stmt.getResultSet();
+			while (rs.next()) {
+				Vehiculo vehiculo = new Vehiculo();
+				vehiculo.setIdsgmv_vehiculo(rs.getInt("idsgmv_vehiculo"));
+				vehiculo.setPlaca(rs.getString("placa"));
+				vehiculo.setMarca(rs.getString("marca"));
+				vehiculo.setModelo(rs.getString("modelo"));
+				vehiculo.setClase(rs.getString("clase"));
+				vehiculo.setConstancia(rs.getString("constancia"));
+				vehiculo.setCategoria(rs.getString("categoria"));
+				vehiculo.setNumero_ejes(rs.getInt("numero_ejes"));
+				vehiculo.setSerie_chasis(rs.getString("serie_chasis"));
+				vehiculo.setAnio_produccion(rs.getInt("anio_produccion"));
+				vehiculo.setCarga_util(rs.getFloat("carga_util"));
+				vehiculo.setPeso_neto(rs.getFloat("peso_neto"));
+				vehiculo.setKilometraje_total(rs.getFloat("km_total"));
+				vehiculo.setEstado(rs.getInt("estado"));
+				vehiculos.add(vehiculo);
+			}
+			rs.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		} finally {
+			if (con != null) {
+				con.close();
+			}
+		}
+		return vehiculos;
 	}
 
 }

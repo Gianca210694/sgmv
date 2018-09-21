@@ -19,6 +19,7 @@ import javax.ws.rs.core.UriInfo;
 
 import org.transport420.sgmv.model.CostoMantenimiento;
 import org.transport420.sgmv.resources.beans.CostosMantenimientoFilterBean;
+import org.transport420.sgmv.resources.beans.FechaFilterBean;
 import org.transport420.sgmv.servicio.CostoMantenimientoServicio;
 
 @Path("/costosMantenimiento")
@@ -36,8 +37,8 @@ public class CostoMantenimientoResource {
 	@GET
 	@Path("exportar")
 	@Produces("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-	public Response exportarCosto(@BeanParam CostosMantenimientoFilterBean filterBean) {
-		return Response.ok(costoMantenimientoServicio.exportarCosto(filterBean))
+	public Response exportarCostoMantenimiento(@BeanParam FechaFilterBean filterBean) {
+		return Response.ok(costoMantenimientoServicio.exportarCostoMantenimiento(filterBean))
 				.header("content-disposition", "attachment; filename = costosMantenimiento.xls").build();
 	}
 

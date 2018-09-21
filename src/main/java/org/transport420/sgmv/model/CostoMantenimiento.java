@@ -7,6 +7,7 @@ public class CostoMantenimiento {
 	private int idsgmv_costo_mantenimiento;
 	private String cod_costo_mantenimiento;
 	private OrdenMantenimiento ordenMantenimiento;
+	private int moneda;
 	private float costo_total;
 	private String fecha;
 	private Vehiculo vehiculo;
@@ -18,12 +19,13 @@ public class CostoMantenimiento {
 	}
 
 	public CostoMantenimiento(int idsgmv_costo_mantenimiento, String cod_costo_mantenimiento,
-			OrdenMantenimiento ordenMantenimiento, float costo_total, String fecha, Vehiculo vehiculo,
+			OrdenMantenimiento ordenMantenimiento, int moneda, float costo_total, String fecha, Vehiculo vehiculo,
 			float costo_vehiculo, List<CostoMantenimientoDetalle> detalle) {
 		super();
 		this.idsgmv_costo_mantenimiento = idsgmv_costo_mantenimiento;
 		this.cod_costo_mantenimiento = cod_costo_mantenimiento;
 		this.ordenMantenimiento = ordenMantenimiento;
+		this.moneda = moneda;
 		this.costo_total = costo_total;
 		this.fecha = fecha;
 		this.vehiculo = vehiculo;
@@ -53,6 +55,14 @@ public class CostoMantenimiento {
 
 	public void setOrdenMantenimiento(OrdenMantenimiento ordenMantenimiento) {
 		this.ordenMantenimiento = ordenMantenimiento;
+	}
+
+	public int getMoneda() {
+		return moneda;
+	}
+
+	public void setMoneda(int moneda) {
+		this.moneda = moneda;
 	}
 
 	public float getCosto_total() {

@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.transport420.sgmv.model.Vehiculo;
+import org.transport420.sgmv.resources.beans.VehiculoReporteFilterBean;
 import org.transport420.sgmv.resources.beans.VehiculosFilterBean;
 import org.transport420.sgmv.servicio.VehiculoServicio;
 
@@ -44,12 +45,13 @@ public class VehiculoResource {
 	public List<Vehiculo> listarSemiremolques() {
 		return vehiculoServicio.listarSemiremolques();
 	}
-	
+
 	@GET
 	@Path("exportar")
 	@Produces("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-	public Response exportarVehiculo(@BeanParam VehiculosFilterBean filterBean) {
-		return Response.ok(vehiculoServicio.exportarVehiculo(filterBean)).header("content-disposition","attachment; filename = vehiculos.xls").build();
+	public Response exportarVehiculo(@BeanParam VehiculoReporteFilterBean filterBean) {
+		return Response.ok(vehiculoServicio.exportarVehiculo(filterBean))
+				.header("content-disposition", "attachment; filename = vehiculos.xls").build();
 	}
 
 	@POST
