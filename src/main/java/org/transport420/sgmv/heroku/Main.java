@@ -29,7 +29,7 @@ public class Main {
 
 		// Use this if you want to execute it repeatedly
 		int period = 10000;// 10secs
-		timer.schedule(new MyTimeTask(), date, period);
+		//timer.schedule(new MyTimeTask(), date, period);
 
 		String webPort = System.getenv("PORT");
 		if (webPort == null || webPort.isEmpty()) {
