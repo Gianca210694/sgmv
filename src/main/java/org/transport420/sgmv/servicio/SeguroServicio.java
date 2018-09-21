@@ -117,4 +117,12 @@ public class SeguroServicio {
 			return null;
 		}
 	}
+
+	public List<Seguro> vencerSeguros() {
+		try {
+			return seguroRepositorio.vencerSeguros();
+		} catch (Exception e) {
+			return null;
+		}
+	}
 }

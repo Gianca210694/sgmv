@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Timer;
+import java.util.concurrent.TimeUnit;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;
@@ -16,21 +17,13 @@ import org.eclipse.jetty.webapp.WebAppContext;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
+		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date = dateFormatter.parse("2018-09-21 08:00:00");
+		Timer timer = new Timer();
+		timer.schedule(new VencerSegurosTarea(), date, TimeUnit.DAYS.toMillis(1));
+
 		// The port that we should run on can be set into an environment variable
 		// Look for that variable and default to 8080 if it isn't there.
-		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Date date = dateFormatter.parse("2018-09-21 11:25:30");
-
-		// Now create the time and schedule it
-		Timer timer = new Timer();
-
-		// Use this if you want to execute it once
-		// timer.schedule(new MyTimeTask(), date);
-
-		// Use this if you want to execute it repeatedly
-		int period = 10000;// 10secs
-		//timer.schedule(new MyTimeTask(), date, period);
-
 		String webPort = System.getenv("PORT");
 		if (webPort == null || webPort.isEmpty()) {
 			webPort = "8080";

@@ -20,4 +20,6 @@ public interface ISeguroRepositorio {
 
 	public List<Seguro> exportarSeguros(SeguroReporteFilterBean filterBean) throws Exception;
 
+	public List<Seguro> vencerSeguros() throws Exception;
+
 }
