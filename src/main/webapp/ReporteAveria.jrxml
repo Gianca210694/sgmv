@@ -110,6 +110,7 @@
 	<parameter name="ComponentesDataSource" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
 	<parameter name="ComponentesLlantasDataSource" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
 	<parameter name="observaciones" class="java.lang.String"/>
+	<parameter name="logo" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -117,7 +118,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
-		<band height="49" splitType="Stretch">
+		<band height="67" splitType="Stretch">
 			<rectangle>
 				<reportElement x="2" y="0" width="550" height="49" uuid="5f7883c6-7397-4890-bc9d-82b5a294058e"/>
 			</rectangle>
@@ -162,6 +163,10 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$P{fechaAveria}]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="2" y="0" width="128" height="50" uuid="031cade9-4192-4d28-a977-c336cb595cf2"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
 		</band>
 	</pageHeader>
 	<detail>

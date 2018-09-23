@@ -242,33 +242,41 @@ public class AveriaServicio {
 
 	public StreamingOutput exportarAveriaPDF(int idsgmv_reporte_falla) {
 		try {
-			final org.transport420.sgmv.model.reporte.ReporteFalla averia = reporteFallaRepositorio.exportarAveriaPDF(idsgmv_reporte_falla);
+			final org.transport420.sgmv.model.reporte.ReporteFalla averia = reporteFallaRepositorio
+					.exportarAveriaPDF(idsgmv_reporte_falla);
 			StreamingOutput stream = new StreamingOutput() {
 				public void write(OutputStream output) throws IOException, WebApplicationException {
 					try {
-						String rutaReporte = this.getClass().getClassLoader().getResource("reportes/ReporteAveria.jrxml").getPath();
+						String rutaReporte = this.getClass().getClassLoader()
+								.getResource("reportes/ReporteAveria.jrxml").getPath();
 						JasperReport jr = JasperCompileManager.compileReport(rutaReporte);
 						JRDataSource jrDataSource = new JREmptyDataSource();
 						Map<String, Object> parametros = new HashMap<String, Object>();
-						
-						JRBeanCollectionDataSource componentesDataSource = new JRBeanCollectionDataSource(averia.getComponentes_principales());
-						JRBeanCollectionDataSource componentesLlantasDataSource = new JRBeanCollectionDataSource(averia.getComponentes_llantas());
-						
+
+						JRBeanCollectionDataSource componentesDataSource = new JRBeanCollectionDataSource(
+								averia.getComponentes_principales());
+						JRBeanCollectionDataSource componentesLlantasDataSource = new JRBeanCollectionDataSource(
+								averia.getComponentes_llantas());
+
 						parametros.put("codAveria", averia.getCod_reporte());
 						parametros.put("versionAveria", "1.00");
 						parametros.put("fechaAveria", (new Date()).toLocaleString());
 						parametros.put("placaTrailer", averia.getRemolque().getPlaca());
 						parametros.put("placaSemitrailer", averia.getSemiremolque().getPlaca());
-						parametros.put("conductor", averia.getConductor().getNombres() + " " + averia.getConductor().getApe_paterno());
+						parametros.put("conductor",
+								averia.getConductor().getNombres() + " " + averia.getConductor().getApe_paterno());
 						parametros.put("fecha", averia.getFecha());
 						parametros.put("kilometraje", "" + averia.getKilometraje());
 						parametros.put("procedencia", Util.getDpto(averia.getProcedencia()));
 						parametros.put("ComponentesDataSource", componentesDataSource);
 						parametros.put("ComponentesLlantasDataSource", componentesLlantasDataSource);
 						parametros.put("observaciones", averia.getObservaciones());
+						parametros.put("logo", this.getClass().getClassLoader()
+								.getResource("reportes/logo_transport420.jpg").getPath());
 						JasperPrint jrPrint = JasperFillManager.fillReport(jr, parametros, jrDataSource);
 						JasperExportManager.exportReportToPdfStream(jrPrint, output);
-						//JasperExportManager.exportReportToPdfFile(jrPrint, "/Users/Giancarlo/Desktop/Plantillas/reporte.pdf");
+						// JasperExportManager.exportReportToPdfFile(jrPrint,
+						// "/Users/Giancarlo/Desktop/Plantillas/reporte.pdf");
 					} catch (Exception e) {
 						System.out.println("jasperError: " + e.getMessage());
 						throw new WebApplicationException(e);

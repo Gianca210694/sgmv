@@ -164,6 +164,7 @@
 	<parameter name="ActividadesDataSource" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
 	<parameter name="observaciones" class="java.lang.String"/>
 	<parameter name="tipoMantenimiento" class="java.lang.String"/>
+	<parameter name="logo" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -171,7 +172,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
-		<band height="49" splitType="Stretch">
+		<band height="63" splitType="Stretch">
 			<rectangle>
 				<reportElement x="2" y="0" width="550" height="49" uuid="5f7883c6-7397-4890-bc9d-82b5a294058e"/>
 			</rectangle>
@@ -216,6 +217,10 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$P{fechaMantenimiento}]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="3" y="0" width="127" height="49" uuid="5a7a1123-27ec-4910-8438-dcfbd158d48e"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
 		</band>
 	</pageHeader>
 	<detail>

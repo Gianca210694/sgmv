@@ -165,6 +165,8 @@ public class OrdenMantenimientoServicio {
 						parametros.put("EquiposDataSource", equiposDataSource);
 						parametros.put("observaciones", mantenimiento.getObservaciones());
 						parametros.put("tipoMantenimiento", mantenimiento.getTipo_mantenimiento());
+						parametros.put("logo", this.getClass().getClassLoader()
+								.getResource("reportes/logo_transport420.jpg").getPath());
 						JasperPrint jrPrint = JasperFillManager.fillReport(jr, parametros, jrDataSource);
 						JasperExportManager.exportReportToPdfStream(jrPrint, output);
 					} catch (Exception e) {
