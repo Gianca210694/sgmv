@@ -36,7 +36,7 @@ public class UsuarioResource {
 	public Response login(Usuario usuario, @Context UriInfo uriInfo) {
 
 		try {
-			String url = "https://www.google.com/recaptcha/api/siteverify?" + "secret="
+			/*String url = "https://www.google.com/recaptcha/api/siteverify?" + "secret="
 					+ "6LeOgmAUAAAAAGbz8tUeJ48BHc43va0ZvMyKLhWj" + "&response=" + usuario.getCaptcha_response();
 			InputStream res = new URL(url).openStream();
 			BufferedReader rd = new BufferedReader(new InputStreamReader(res, Charset.forName("UTF-8")));
@@ -63,7 +63,14 @@ public class UsuarioResource {
 				Usuario u = new Usuario();
 				u.setMensaje_respuesta("Ha fallado la validación captcha");
 				return Response.noContent().entity(u).build();
-			}
+			}*/
+			SecureRandom random = new SecureRandom();
+			byte bytes[] = new byte[20];
+			random.nextBytes(bytes);
+			Usuario respUsuario = usuarioServicio.login(usuario);
+			respUsuario.setToken(bytes.toString());
+			URI uri = uriInfo.getAbsolutePathBuilder().build();
+			return Response.created(uri).entity(respUsuario).build();
 		} catch (Exception e) {
 			Usuario u = new Usuario();
 			u.setMensaje_respuesta(e.getMessage());
