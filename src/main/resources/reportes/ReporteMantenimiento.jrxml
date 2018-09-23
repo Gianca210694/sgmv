@@ -184,35 +184,35 @@
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial" size="11" isBold="true"/>
+					<font fontName="DejaVu Sans" size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ORDEN DE TRABAJO DE MANTENIMIENTO]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="432" y="7" width="48" height="12" uuid="43eb1075-a0ba-4d7e-822e-e87227c0dfaa"/>
 				<textElement>
-					<font fontName="Arial" size="10"/>
+					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[Código	:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="432" y="31" width="48" height="12" uuid="ae7f9aa6-1112-4b44-9cd6-3505cf82c5d5"/>
 				<textElement>
-					<font fontName="Arial" size="10"/>
+					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[Fecha	:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement x="480" y="7" width="64" height="12" uuid="2d759b7c-ac26-41ca-bf34-8aca0a34f47c"/>
 				<textElement>
-					<font fontName="Arial" size="10"/>
+					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{codMantenimiento}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="481" y="31" width="64" height="12" uuid="8649335a-cc73-480d-8c52-2ca47ca90ddb"/>
 				<textElement>
-					<font fontName="Arial" size="10"/>
+					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{fechaMantenimiento}]]></textFieldExpression>
 			</textField>
@@ -226,14 +226,14 @@
 			<staticText>
 				<reportElement x="10" y="6" width="90" height="12" uuid="ddd730e0-de9e-4e5d-be59-5588979e7a6c"/>
 				<textElement>
-					<font fontName="Arial" size="10"/>
+					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[Placa Trailer	:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="10" y="30" width="90" height="12" uuid="9a35da17-198c-43be-9bc8-8974a0482916"/>
 				<textElement>
-					<font fontName="Arial" size="10"/>
+					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[Placa Semitrailer	:]]></text>
 			</staticText>
@@ -243,14 +243,14 @@
 			<textField isBlankWhenNull="true">
 				<reportElement x="90" y="18" width="74" height="12" uuid="698064bf-9136-48f9-a163-83e90b891b05"/>
 				<textElement>
-					<font fontName="Arial" size="9"/>
+					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{placaTrailer}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="90" y="42" width="74" height="12" uuid="a6723831-fbfd-426b-ac83-81675277b8f2"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{placaSemitrailer}]]></textFieldExpression>
 			</textField>
@@ -260,28 +260,28 @@
 			<staticText>
 				<reportElement x="340" y="30" width="50" height="12" uuid="17f8e994-1f57-404d-927c-35252fed0735"/>
 				<textElement>
-					<font fontName="Arial" size="10"/>
+					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[Fecha	:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement x="390" y="42" width="60" height="12" uuid="2d1b7127-3bb6-4d22-97e5-b7fe83d9ddfe"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="170" y="30" width="65" height="12" uuid="0a6082b9-7837-4709-afb0-53141d47627c"/>
 				<textElement>
-					<font fontName="Arial" size="10"/>
+					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[Kilometraje :]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement x="210" y="42" width="100" height="12" uuid="5aa3108e-704d-452f-9a67-a0d08290a4b6"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{kilometraje}]]></textFieldExpression>
 			</textField>
@@ -294,7 +294,7 @@
 			<staticText>
 				<reportElement x="3" y="60" width="287" height="30" uuid="26b099d8-af7c-47b8-849d-244feb3ed905"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="DejaVu Sans" size="9"/>
 					<paragraph leftIndent="5"/>
 				</textElement>
 				<text><![CDATA[Defectos Reportados, Encontrados]]></text>
@@ -302,14 +302,14 @@
 			<staticText>
 				<reportElement x="340" y="6" width="125" height="12" uuid="604b2c19-cbef-4766-8854-4c2154bb1959"/>
 				<textElement>
-					<font fontName="Arial" size="10"/>
+					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[Tipo de Mantenimiento :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="170" y="6" width="65" height="12" uuid="4752300c-9781-4b4e-b644-8645a972a9f9"/>
 				<textElement>
-					<font fontName="Arial" size="10"/>
+					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[Prioridad :]]></text>
 			</staticText>
@@ -319,21 +319,21 @@
 			<textField isBlankWhenNull="true">
 				<reportElement x="210" y="18" width="100" height="12" uuid="43446d11-bcd5-4c2e-b34a-d3e6becb8117"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{prioridad}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="390" y="18" width="140" height="12" uuid="d65eae7c-41eb-486b-b8c1-bd71d43cbc37"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{tipoMantenimiento}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="291" y="60" width="119" height="30" uuid="ddf3ceba-8e99-4eaa-8c33-b2e0c9a6f1fe"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="DejaVu Sans" size="9"/>
 					<paragraph leftIndent="5"/>
 				</textElement>
 				<text><![CDATA[Reportado, Verificado por]]></text>
@@ -344,7 +344,7 @@
 			<staticText>
 				<reportElement x="409" y="60" width="72" height="30" uuid="4b05cbb2-fbc3-43c2-833d-7388f7661c7c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="DejaVu Sans" size="9"/>
 					<paragraph leftIndent="5"/>
 				</textElement>
 				<text><![CDATA[Fecha Reporte]]></text>
@@ -355,7 +355,7 @@
 			<staticText>
 				<reportElement x="481" y="60" width="71" height="30" uuid="b3aa2e59-4791-4edd-a80c-44d04dba26e0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="DejaVu Sans" size="9"/>
 					<paragraph leftIndent="5"/>
 				</textElement>
 				<text><![CDATA[Fecha Inspección]]></text>
@@ -383,7 +383,7 @@
 									<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 								</box>
 								<textElement verticalAlignment="Middle">
-									<font size="8"/>
+									<font fontName="DejaVu Sans" size="8"/>
 									<paragraph leftIndent="5"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{defecto}]]></textFieldExpression>
@@ -402,7 +402,7 @@
 									<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 								</box>
 								<textElement verticalAlignment="Middle">
-									<font size="8"/>
+									<font fontName="DejaVu Sans" size="8"/>
 									<paragraph leftIndent="5"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{reportado_verificado_por}]]></textFieldExpression>
@@ -421,7 +421,7 @@
 									<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 								</box>
 								<textElement verticalAlignment="Middle">
-									<font size="8"/>
+									<font fontName="DejaVu Sans" size="8"/>
 									<paragraph leftIndent="5"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{fecha_reporte}]]></textFieldExpression>
@@ -440,7 +440,7 @@
 									<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 								</box>
 								<textElement verticalAlignment="Middle">
-									<font size="8"/>
+									<font fontName="DejaVu Sans" size="8"/>
 									<paragraph leftIndent="5"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{fecha_inspeccion}]]></textFieldExpression>
@@ -460,7 +460,7 @@
 			<staticText>
 				<reportElement x="3" y="0" width="287" height="30" uuid="9032b131-9128-4f8f-9a83-a2fe0fff2528"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="DejaVu Sans" size="9"/>
 					<paragraph leftIndent="5"/>
 				</textElement>
 				<text><![CDATA[Actividades y Controles a Realizar]]></text>
@@ -468,7 +468,7 @@
 			<staticText>
 				<reportElement x="291" y="0" width="119" height="30" uuid="c78d1def-3d11-433e-af17-1f233ed5959f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="DejaVu Sans" size="9"/>
 					<paragraph leftIndent="5"/>
 				</textElement>
 				<text><![CDATA[Ejecutado por]]></text>
@@ -479,7 +479,7 @@
 			<staticText>
 				<reportElement x="409" y="0" width="72" height="30" uuid="c4b2c7ed-eabb-455f-91af-aebf3e851389"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="DejaVu Sans" size="9"/>
 					<paragraph leftIndent="5"/>
 				</textElement>
 				<text><![CDATA[Fecha Reporte]]></text>
@@ -490,7 +490,7 @@
 			<staticText>
 				<reportElement x="481" y="0" width="71" height="30" uuid="15c61083-dee8-4c24-9f20-e29ffbacb814"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="DejaVu Sans" size="9"/>
 					<paragraph leftIndent="5"/>
 				</textElement>
 				<text><![CDATA[Fecha Inspección]]></text>
@@ -518,7 +518,7 @@
 									<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 								</box>
 								<textElement verticalAlignment="Middle">
-									<font size="8"/>
+									<font fontName="DejaVu Sans" size="8"/>
 									<paragraph leftIndent="5"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{actividad}]]></textFieldExpression>
@@ -537,7 +537,7 @@
 									<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 								</box>
 								<textElement verticalAlignment="Middle">
-									<font size="8"/>
+									<font fontName="DejaVu Sans" size="8"/>
 									<paragraph leftIndent="5"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{ejecutado_por}]]></textFieldExpression>
@@ -556,7 +556,7 @@
 									<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 								</box>
 								<textElement verticalAlignment="Middle">
-									<font size="8"/>
+									<font fontName="DejaVu Sans" size="8"/>
 									<paragraph leftIndent="5"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{fecha_programacion}]]></textFieldExpression>
@@ -575,7 +575,7 @@
 									<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 								</box>
 								<textElement verticalAlignment="Middle">
-									<font size="8"/>
+									<font fontName="DejaVu Sans" size="8"/>
 									<paragraph leftIndent="5"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{fecha_ejecucion}]]></textFieldExpression>
@@ -595,7 +595,7 @@
 			<staticText>
 				<reportElement x="3" y="0" width="406" height="30" uuid="25bba9f4-2024-4ff5-8bc3-778deb4c615f"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="DejaVu Sans" size="9"/>
 					<paragraph leftIndent="5"/>
 				</textElement>
 				<text><![CDATA[Equipos, Repuestos (Reparados, Cambiados)]]></text>
@@ -603,7 +603,7 @@
 			<staticText>
 				<reportElement x="409" y="0" width="111" height="30" uuid="8ea95a41-d42c-4c57-85c8-ac5af4e2667e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="DejaVu Sans" size="9"/>
 					<paragraph leftIndent="5"/>
 				</textElement>
 				<text><![CDATA[Inspeccionado por]]></text>
@@ -614,7 +614,7 @@
 			<staticText>
 				<reportElement x="520" y="0" width="32" height="30" uuid="8fb9d595-9d2e-4c5d-8955-796ddcceb535"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="DejaVu Sans" size="9"/>
 					<paragraph leftIndent="5"/>
 				</textElement>
 				<text><![CDATA[OK]]></text>
@@ -642,7 +642,7 @@
 									<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 								</box>
 								<textElement verticalAlignment="Middle">
-									<font size="8"/>
+									<font fontName="DejaVu Sans" size="8"/>
 									<paragraph leftIndent="5"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{equipo}]]></textFieldExpression>
@@ -661,7 +661,7 @@
 									<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 								</box>
 								<textElement verticalAlignment="Middle">
-									<font size="8"/>
+									<font fontName="DejaVu Sans" size="8"/>
 									<paragraph leftIndent="5"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{inspeccionado_por}]]></textFieldExpression>
@@ -680,7 +680,7 @@
 									<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 								</box>
 								<textElement verticalAlignment="Middle">
-									<font size="8"/>
+									<font fontName="DejaVu Sans" size="8"/>
 									<paragraph leftIndent="5"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$F{ok}]]></textFieldExpression>
@@ -697,14 +697,14 @@
 			<staticText>
 				<reportElement x="10" y="0" width="90" height="12" uuid="e70c86ba-61b6-47dc-aea1-c4a7bd8643c0"/>
 				<textElement>
-					<font fontName="Arial" size="10"/>
+					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
 				<text><![CDATA[Observaciones	:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement x="10" y="10" width="535" height="39" uuid="7c1dfa0a-ae94-4146-9208-4fa4309660b9"/>
 				<textElement>
-					<font fontName="Arial" size="9"/>
+					<font fontName="DejaVu Sans" size="9"/>
 					<paragraph leftIndent="5"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{observaciones}]]></textFieldExpression>
@@ -718,7 +718,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<text><![CDATA[Autorizado Por]]></text>
 			</staticText>
@@ -731,7 +731,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="9"/>
+					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<text><![CDATA[Revisado Por]]></text>
 			</staticText>
