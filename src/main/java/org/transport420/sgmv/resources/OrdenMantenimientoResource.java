@@ -35,6 +35,14 @@ public class OrdenMantenimientoResource {
 	}
 
 	@GET
+	@Path("exportarPDF/{ordenMantenimientoId}")
+	@Produces("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+	public Response exportarOrdenMantenimientoPDF(@PathParam("ordenMantenimientoId") int ordenMantenimientoId) {
+		return Response.ok(ordenMantenimientoServicio.exportarOrdenMantenimientoPDF(ordenMantenimientoId))
+				.header("content-disposition", "attachment; filename = orden_mantenimiento.pdf").build();
+	}
+
+	@GET
 	@Path("exportar")
 	@Produces("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
 	public Response exportarOrdenMantenimiento(@BeanParam FechaFilterBean filterBean) {

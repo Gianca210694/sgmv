@@ -7,7 +7,7 @@ public class Actividad {
 
 	private int idsgmv_actividad;
 	private String descripcion;
-	private Empleado ejecutado_por;
+	private int ejecutado_por;
 	private String fecha_programacion;
 	private String fecha_ejecucion;
 
@@ -15,7 +15,7 @@ public class Actividad {
 
 	}
 
-	public Actividad(int idsgmv_actividad, String descripcion, Empleado ejecutado_por,
+	public Actividad(int idsgmv_actividad, String descripcion, int ejecutado_por,
 			String fecha_programacion, String fecha_ejecucion) {
 		super();
 		this.idsgmv_actividad = idsgmv_actividad;
@@ -41,11 +41,11 @@ public class Actividad {
 		this.descripcion = descripcion;
 	}
 
-	public Empleado getEjecutado_por() {
+	public int getEjecutado_por() {
 		return ejecutado_por;
 	}
 
-	public void setEjecutado_por(Empleado ejecutado_por) {
+	public void setEjecutado_por(int ejecutado_por) {
 		this.ejecutado_por = ejecutado_por;
 	}
 

@@ -8,6 +8,17 @@ public class UsuariosFilterBean {
 	private @QueryParam("rol") int rol;
 	private @QueryParam("estado") int estado;
 
+	public UsuariosFilterBean() {
+		
+	}
+	
+	public UsuariosFilterBean(String dni, int rol, int estado) {
+		super();
+		this.dni = dni;
+		this.rol = rol;
+		this.estado = estado;
+	}
+
 	public String getDni() {
 		return dni;
 	}
@@ -31,5 +42,5 @@ public class UsuariosFilterBean {
 	public void setEstado(int estado) {
 		this.estado = estado;
 	}
-	
+
 }

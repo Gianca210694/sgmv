@@ -1,9 +1,7 @@
 package org.transport420.sgmv.resources;
 
 import java.net.URI;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
@@ -24,14 +22,6 @@ import org.transport420.sgmv.resources.beans.FechaFilterBean;
 import org.transport420.sgmv.resources.beans.ReporteFallasFilterBean;
 import org.transport420.sgmv.servicio.AveriaServicio;
 
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JREmptyDataSource;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-
 @Path("/averias")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
@@ -41,20 +31,15 @@ public class AveriaResource {
 
 	@GET
 	public List<ReporteFalla> listarAverias(@BeanParam ReporteFallasFilterBean filterBean) {
-		try {
-			String rutaReporte = this.getClass().getClassLoader().getResource("reportes/ReporteAveria.jrxml").getPath();
-			JasperReport jr = JasperCompileManager.compileReport(rutaReporte);
-			JRDataSource jrDataSource = new JREmptyDataSource();
-			Map<String, Object> parametros = new HashMap<String, Object>();
-			parametros.put("codAveria", "RF00001");
-			parametros.put("versionAveria", "1.00");
-			parametros.put("fechaAveria", "17/09/2018");
-			JasperPrint jrPrint = JasperFillManager.fillReport(jr, parametros, jrDataSource);
-			JasperExportManager.exportReportToPdfFile(jrPrint, "/Users/Giancarlo/Desktop/Plantillas/reporte.pdf");
-		} catch (Exception e) {
-			System.out.println("error jasper: " + e.getMessage());
-		}
 		return averiaServicio.listarAverias(filterBean);
+	}
+
+	@GET
+	@Path("exportarPDF/{idAveria}")
+	@Produces("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+	public Response exportarAveriaPDF(@PathParam("idAveria") int idAveria) {
+		return Response.ok(averiaServicio.exportarAveriaPDF(idAveria))
+				.header("content-disposition", "attachment; filename = averia.pdf").build();
 	}
 
 	@GET
@@ -63,6 +48,14 @@ public class AveriaResource {
 	public Response exportarAveria(@BeanParam FechaFilterBean filterBean) {
 		return Response.ok(averiaServicio.exportarAveria(filterBean))
 				.header("content-disposition", "attachment; filename = averias.xls").build();
+	}
+
+	@GET
+	@Path("exportarViajes/{ciudadDestino}")
+	@Produces("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+	public Response exportarViajes(@PathParam("ciudadDestino") int ciudadDestino) {
+		return Response.ok(averiaServicio.exportarViajes(ciudadDestino))
+				.header("content-disposition", "attachment; filename = viajes.xls").build();
 	}
 
 	@POST

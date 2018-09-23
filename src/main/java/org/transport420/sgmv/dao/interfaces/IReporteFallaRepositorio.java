@@ -20,4 +20,9 @@ public interface IReporteFallaRepositorio {
 
 	public List<ReporteFalla> reporteAverias(FechaFilterBean filterBean) throws Exception;
 
+	public List<ReporteFalla> reporteViajes(int ciudadDestino) throws Exception;
+
+	public org.transport420.sgmv.model.reporte.ReporteFalla exportarAveriaPDF(int idsgmv_reporte_falla)
+			throws Exception;
+
 }

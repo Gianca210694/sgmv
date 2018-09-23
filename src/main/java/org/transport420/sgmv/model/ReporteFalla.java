@@ -11,8 +11,8 @@ public class ReporteFalla {
 	private String cod_reporte;
 	private String fecha;
 	private float kilometraje;
-	private String procedencia;
-	private String destino;
+	private int procedencia;
+	private int destino;
 	private String observaciones;
 	private Vehiculo remolque;
 	private Vehiculo semiremolque;
@@ -27,7 +27,7 @@ public class ReporteFalla {
 	}
 
 	public ReporteFalla(int idsgmv_reporte_falla, String cod_reporte, String fecha, float kilometraje,
-			String procedencia, String destino, String observaciones, Vehiculo remolque, Vehiculo semiremolque, Empleado empleado,
+			int procedencia, int destino, String observaciones, Vehiculo remolque, Vehiculo semiremolque, Empleado empleado,
 			Empleado conductor, int estado, List<ReporteFallaComponentePrincipal> componentes_principales,
 			List<ReporteFallaComponenteLlanta> componentes_llantas) {
 		super();
@@ -79,19 +79,19 @@ public class ReporteFalla {
 		this.kilometraje = kilometraje;
 	}
 
-	public String getProcedencia() {
+	public int getProcedencia() {
 		return procedencia;
 	}
 
-	public void setProcedencia(String procedencia) {
+	public void setProcedencia(int procedencia) {
 		this.procedencia = procedencia;
 	}
 
-	public String getDestino() {
+	public int getDestino() {
 		return destino;
 	}
 
-	public void setDestino(String destino) {
+	public void setDestino(int destino) {
 		this.destino = destino;
 	}
 

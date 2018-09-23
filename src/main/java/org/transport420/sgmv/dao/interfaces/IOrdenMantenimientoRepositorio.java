@@ -21,4 +21,7 @@ public interface IOrdenMantenimientoRepositorio {
 
 	public List<OrdenMantenimiento> reporteOrdenesMantenimiento(FechaFilterBean filterBean) throws Exception;
 
+	public org.transport420.sgmv.model.reporte.OrdenMantenimiento exportarOrdenMantenimientoPDF(
+			int idsgmv_orden_mantenimiento) throws Exception;
+
 }

@@ -12,6 +12,7 @@ import org.transport420.sgmv.daofactory.DAOFactory;
 import org.transport420.sgmv.model.CostoMantenimiento;
 import org.transport420.sgmv.resources.beans.CostosMantenimientoFilterBean;
 import org.transport420.sgmv.resources.beans.FechaFilterBean;
+import org.transport420.sgmv.util.Util;
 
 import jxl.Workbook;
 import jxl.WorkbookSettings;
@@ -89,7 +90,8 @@ public class CostoMantenimientoServicio {
 						sheet.addCell(new Label(3, filaCount, "CÓDIGO", hFormat));
 						sheet.addCell(new Label(4, filaCount, "ORDEN DE MANTENIMIENTO", hFormat));
 						sheet.addCell(new Label(5, filaCount, "FECHA", hFormat));
-						sheet.addCell(new Label(6, filaCount, "COSTO POR VEHÍCULO", hFormat));
+						sheet.addCell(new Label(6, filaCount, "MONEDA", hFormat));
+						sheet.addCell(new Label(7, filaCount, "COSTO POR VEHÍCULO", hFormat));
 						filaCount++;
 						for (CostoMantenimiento costo : costos) {
 							sheet.addCell(new Label(0, filaCount, costo.getVehiculo().getMarca(), hFormat));
@@ -99,7 +101,8 @@ public class CostoMantenimientoServicio {
 							sheet.addCell(new Label(4, filaCount,
 									costo.getOrdenMantenimiento().getCod_mantenimiento_orden(), hFormat));
 							sheet.addCell(new Label(5, filaCount, costo.getFecha(), hFormat));
-							sheet.addCell(new Label(6, filaCount, "" + costo.getCosto_vehiculo(), hFormat));
+							sheet.addCell(new Label(6, filaCount, Util.getMoneda(costo.getMoneda()), hFormat));
+							sheet.addCell(new Label(7, filaCount, "" + costo.getCosto_vehiculo(), hFormat));
 							filaCount++;
 						}
 						workBoook.write();
@@ -139,7 +142,8 @@ public class CostoMantenimientoServicio {
 						sheet.addCell(new Label(4, filaCount, "PLACA", hFormat));
 						sheet.addCell(new Label(5, filaCount, "MARCA", hFormat));
 						sheet.addCell(new Label(6, filaCount, "MODELO", hFormat));
-						sheet.addCell(new Label(7, filaCount, "COSTO VEHÍCULO", hFormat));
+						sheet.addCell(new Label(7, filaCount, "MONEDA", hFormat));
+						sheet.addCell(new Label(8, filaCount, "COSTO VEHÍCULO", hFormat));
 						filaCount++;
 						for (CostoMantenimiento costo : costos) {
 							sheet.addCell(new Label(0, filaCount, costo.getCod_costo_mantenimiento(), hFormat));
@@ -150,7 +154,8 @@ public class CostoMantenimientoServicio {
 							sheet.addCell(new Label(4, filaCount, costo.getVehiculo().getPlaca(), hFormat));
 							sheet.addCell(new Label(5, filaCount, costo.getVehiculo().getMarca(), hFormat));
 							sheet.addCell(new Label(6, filaCount, costo.getVehiculo().getModelo(), hFormat));
-							sheet.addCell(new Label(7, filaCount, "" + costo.getCosto_vehiculo(), hFormat));
+							sheet.addCell(new Label(7, filaCount, Util.getMoneda(costo.getMoneda()), hFormat));
+							sheet.addCell(new Label(8, filaCount, "" + costo.getCosto_vehiculo(), hFormat));
 							filaCount++;
 						}
 						workBoook.write();

@@ -20,6 +20,8 @@ import org.transport420.sgmv.model.ReporteFalla;
 import org.transport420.sgmv.model.ReporteFallaComponenteLlanta;
 import org.transport420.sgmv.model.ReporteFallaComponentePrincipal;
 import org.transport420.sgmv.model.Vehiculo;
+import org.transport420.sgmv.model.reporte.ComponenteLlanta;
+import org.transport420.sgmv.model.reporte.ComponentePrincipal;
 import org.transport420.sgmv.resources.beans.FechaFilterBean;
 import org.transport420.sgmv.resources.beans.ReporteFallasFilterBean;
 
@@ -46,8 +48,8 @@ public class ReporteFallaRepositorio implements IReporteFallaRepositorio {
 				Calendar gmt = Calendar.getInstance(TimeZone.getTimeZone("GMT-5:00"));
 				reporteFalla.setFecha(df.format(rs.getDate("fecha", gmt)));
 				reporteFalla.setKilometraje(rs.getFloat("kilometraje"));
-				reporteFalla.setProcedencia(rs.getString("procedencia"));
-				reporteFalla.setDestino(rs.getString("destino"));
+				reporteFalla.setProcedencia(rs.getInt("procedencia"));
+				reporteFalla.setDestino(rs.getInt("destino"));
 				reporteFalla.setObservaciones(rs.getString("observaciones"));
 				reporteFalla.setRemolque(new Vehiculo());
 				reporteFalla.getRemolque().setIdsgmv_vehiculo(rs.getInt("idsgmv_tractor"));
@@ -89,8 +91,8 @@ public class ReporteFallaRepositorio implements IReporteFallaRepositorio {
 			String queryComponentesLlantas = "{CALL sql10257745.sp_crear_componente_llanta_averia(?, ?, ?)}";
 			CallableStatement stmt = con.prepareCall(queryAveria);
 			stmt.setFloat("pKilometraje", reporteFalla.getKilometraje());
-			stmt.setString("pProcedencia", reporteFalla.getProcedencia());
-			stmt.setString("pDestino", reporteFalla.getDestino());
+			stmt.setInt("pProcedencia", reporteFalla.getProcedencia());
+			stmt.setInt("pDestino", reporteFalla.getDestino());
 			stmt.setString("pObservaciones", reporteFalla.getObservaciones());
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
 			LocalDate date = LocalDate.parse(reporteFalla.getFecha(), formatter);
@@ -164,8 +166,8 @@ public class ReporteFallaRepositorio implements IReporteFallaRepositorio {
 				Calendar gmt = Calendar.getInstance(TimeZone.getTimeZone("GMT-5:00"));
 				averia.setFecha(df.format(rs.getDate("fecha", gmt)));
 				averia.setKilometraje(rs.getFloat("kilometraje"));
-				averia.setProcedencia(rs.getString("procedencia"));
-				averia.setDestino(rs.getString("destino"));
+				averia.setProcedencia(rs.getInt("procedencia"));
+				averia.setDestino(rs.getInt("destino"));
 				averia.setObservaciones(rs.getString("observaciones"));
 				averia.setRemolque(new Vehiculo());
 				averia.getRemolque().setIdsgmv_vehiculo(rs.getInt("idsgmv_tractor"));
@@ -236,8 +238,8 @@ public class ReporteFallaRepositorio implements IReporteFallaRepositorio {
 			java.sql.Date sqlDate = java.sql.Date.valueOf(date);
 			stmt.setDate("pFecha", sqlDate);
 			stmt.setFloat("pKilometraje", reporteFalla.getKilometraje());
-			stmt.setString("pProcedencia", reporteFalla.getProcedencia());
-			stmt.setString("pDestino", reporteFalla.getDestino());
+			stmt.setInt("pProcedencia", reporteFalla.getProcedencia());
+			stmt.setInt("pDestino", reporteFalla.getDestino());
 			stmt.setString("pObservaciones", reporteFalla.getObservaciones());
 			stmt.setInt("pIdsgmv_tractor", reporteFalla.getRemolque().getIdsgmv_vehiculo());
 			stmt.setInt("pIdsgmv_semitrailer", reporteFalla.getSemiremolque().getIdsgmv_vehiculo());
@@ -323,8 +325,8 @@ public class ReporteFallaRepositorio implements IReporteFallaRepositorio {
 				Calendar gmt = Calendar.getInstance(TimeZone.getTimeZone("GMT-5:00"));
 				reporteFalla.setFecha(df.format(rs.getDate("fecha", gmt)));
 				reporteFalla.setKilometraje(rs.getFloat("kilometraje"));
-				reporteFalla.setProcedencia(rs.getString("procedencia"));
-				reporteFalla.setDestino(rs.getString("destino"));
+				reporteFalla.setProcedencia(rs.getInt("procedencia"));
+				reporteFalla.setDestino(rs.getInt("destino"));
 				reporteFalla.setObservaciones(rs.getString("observaciones"));
 				reporteFalla.setRemolque(new Vehiculo());
 				reporteFalla.getRemolque().setIdsgmv_vehiculo(rs.getInt("idsgmv_tractor"));
@@ -355,6 +357,116 @@ public class ReporteFallaRepositorio implements IReporteFallaRepositorio {
 			}
 		}
 		return reporteFallas;
+	}
+
+	@Override
+	public List<ReporteFalla> reporteViajes(int ciudadDestino) throws Exception {
+		Connection con = null;
+		List<ReporteFalla> reporteFallas = new ArrayList<>();
+		try {
+			con = MySqlDAOFactory.obtenerConexion();
+			String query = "{CALL sql10257745.sp_exportar_viajes(?)}";
+			CallableStatement stmt = con.prepareCall(query);
+			stmt.setInt("pCiudadDestino", ciudadDestino);
+			stmt.execute();
+
+			ResultSet rs = stmt.getResultSet();
+			while (rs.next()) {
+				ReporteFalla reporteFalla = new ReporteFalla();
+				DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+				Calendar gmt = Calendar.getInstance(TimeZone.getTimeZone("GMT-5:00"));
+				reporteFalla.setFecha(df.format(rs.getDate("fecha", gmt)));
+				reporteFalla.setProcedencia(rs.getInt("procedencia"));
+				reporteFalla.setDestino(rs.getInt("destino"));
+				reporteFalla.setRemolque(new Vehiculo());
+				reporteFalla.getRemolque().setIdsgmv_vehiculo(rs.getInt("idsgmv_tractor"));
+				reporteFalla.getRemolque().setPlaca(rs.getString("placa_tractor"));
+				reporteFalla.setSemiremolque(new Vehiculo());
+				reporteFalla.getSemiremolque().setIdsgmv_vehiculo(rs.getInt("idsgmv_semitrailer"));
+				reporteFalla.getSemiremolque().setPlaca(rs.getString("placa_semitrailer"));
+				reporteFalla.setConductor(new Empleado());
+				reporteFalla.getConductor().setIdsgmv_empleado(rs.getInt("idsgmv_conductor"));
+				reporteFalla.getConductor().setNombres(rs.getString("nombres"));
+				reporteFalla.getConductor().setApe_paterno(rs.getString("ape_paterno"));
+				reporteFallas.add(reporteFalla);
+			}
+			rs.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		} finally {
+			if (con != null) {
+				con.close();
+			}
+		}
+		return reporteFallas;
+	}
+
+	@Override
+	public org.transport420.sgmv.model.reporte.ReporteFalla exportarAveriaPDF(int idsgmv_reporte_falla) throws Exception {
+		Connection con = null;
+		org.transport420.sgmv.model.reporte.ReporteFalla averia = new org.transport420.sgmv.model.reporte.ReporteFalla();
+		try {
+			con = MySqlDAOFactory.obtenerConexion();
+			String query = "{CALL sql10257745.sp_exportar_averia_pdf(?)}";
+			CallableStatement stmt = con.prepareCall(query);
+			stmt.setInt("pIdsgmv_reporte_falla", idsgmv_reporte_falla);
+			stmt.execute();
+
+			ResultSet rs = stmt.getResultSet();
+			while (rs.next()) {
+				averia.setCod_reporte(rs.getString("cod_reporte"));
+				DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+				Calendar gmt = Calendar.getInstance(TimeZone.getTimeZone("GMT-5:00"));
+				averia.setFecha(df.format(rs.getDate("fecha", gmt)));
+				averia.setKilometraje(rs.getFloat("kilometraje"));
+				averia.setProcedencia(rs.getInt("procedencia"));
+				averia.setRemolque(new Vehiculo());
+				averia.getRemolque().setPlaca(rs.getString("placa_tractor"));
+				averia.setSemiremolque(new Vehiculo());
+				averia.getSemiremolque().setPlaca(rs.getString("placa_semitrailer"));
+				averia.setConductor(new Empleado());
+				averia.getConductor().setNombres(rs.getString("nombres_conductor"));
+				averia.getConductor().setApe_paterno(rs.getString("ape_pat_coductor"));
+				averia.setObservaciones(rs.getString("observaciones"));
+			}
+			rs.close();
+
+			stmt.getMoreResults();
+
+			rs = stmt.getResultSet();
+			averia.setComponentes_principales(new ArrayList<ComponentePrincipal>());
+			while (rs.next()) {
+				ComponentePrincipal comp = new ComponentePrincipal();
+				comp.setIdsgmv_componente_principal(rs.getInt("idsgmv_componente_principal"));
+				comp.setTitulo(rs.getString("titulo"));
+				comp.setDescripcion(rs.getString("descripcion"));
+				comp.setMarcar(rs.getInt("marcar"));
+				averia.getComponentes_principales().add(comp);
+			}
+
+			stmt.getMoreResults();
+
+			rs = stmt.getResultSet();
+			averia.setComponentes_llantas(new ArrayList<ComponenteLlanta>());
+			while (rs.next()) {
+				ComponenteLlanta comp = new ComponenteLlanta();
+				comp.setIdsgmv_componente_llanta(rs.getInt("idsgmv_componente_llanta"));
+				comp.setTitulo(rs.getString("titulo"));
+				comp.setDescripcion(rs.getString("descripcion"));
+				comp.setMarcar(rs.getInt("marcar"));
+				averia.getComponentes_llantas().add(comp);
+			}
+			rs.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		} finally {
+			if (con != null) {
+				con.close();
+			}
+		}
+		return averia;
 	}
 
 }

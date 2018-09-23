@@ -12,6 +12,7 @@ import org.transport420.sgmv.daofactory.DAOFactory;
 import org.transport420.sgmv.model.Vehiculo;
 import org.transport420.sgmv.resources.beans.VehiculoReporteFilterBean;
 import org.transport420.sgmv.resources.beans.VehiculosFilterBean;
+import org.transport420.sgmv.util.Util;
 
 import jxl.Workbook;
 import jxl.WorkbookSettings;
@@ -126,7 +127,7 @@ public class VehiculoServicio {
 							sheet.addCell(new Label(9, filaCount, "" + vehiculo.getCarga_util(), hFormat));
 							sheet.addCell(new Label(10, filaCount, "" + vehiculo.getPeso_neto(), hFormat));
 							sheet.addCell(new Label(11, filaCount, "" + vehiculo.getKilometraje_total(), hFormat));
-							sheet.addCell(new Label(12, filaCount, "" + vehiculo.getEstado(), hFormat));
+							sheet.addCell(new Label(12, filaCount, Util.getEstado(vehiculo.getEstado()), hFormat));
 							filaCount++;
 						}
 						workBoook.write();

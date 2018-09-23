@@ -23,6 +23,7 @@ import org.transport420.sgmv.model.OrdenMantenimiento;
 import org.transport420.sgmv.model.ReporteFalla;
 import org.transport420.sgmv.resources.beans.FechaFilterBean;
 import org.transport420.sgmv.resources.beans.OrdenesMantenimientoFilterBean;
+import org.transport420.sgmv.util.Util;
 
 public class OrdenMantenimientoRepositorio implements IOrdenMantenimientoRepositorio {
 
@@ -107,7 +108,7 @@ public class OrdenMantenimientoRepositorio implements IOrdenMantenimientoReposit
 					stmtActividad.setInt("pIdsgmv_orden_mantenimiento",
 							ordenMantenimiento.getIdsgmv_orden_mantenimiento());
 					stmtActividad.setString("pDescripcion", act.getDescripcion());
-					stmtActividad.setInt("pEjecutadoPor", act.getEjecutado_por().getIdsgmv_empleado());
+					stmtActividad.setInt("pEjecutadoPor", act.getEjecutado_por());
 					LocalDate dateProg = LocalDate.parse(act.getFecha_programacion(), formatter);
 					java.sql.Date sqlDateProg = java.sql.Date.valueOf(dateProg);
 					stmtActividad.setDate("pFechaProgramacion", sqlDateProg);
@@ -211,10 +212,7 @@ public class OrdenMantenimientoRepositorio implements IOrdenMantenimientoReposit
 				Actividad act = new Actividad();
 				act.setIdsgmv_actividad(rs.getInt("idsgmv_actividad"));
 				act.setDescripcion(rs.getString("descripcion"));
-				act.setEjecutado_por(new Empleado());
-				act.getEjecutado_por().setIdsgmv_empleado(rs.getInt("ejecutado_por"));
-				act.getEjecutado_por().setNombres(rs.getString("nombres"));
-				act.getEjecutado_por().setApe_paterno(rs.getString("ape_paterno"));
+				act.setEjecutado_por(rs.getInt("ejecutado_por"));
 				act.setFecha_programacion(df.format(rs.getDate("fecha_programacion", gmt)));
 				act.setFecha_ejecucion(df.format(rs.getDate("fecha_ejecucion", gmt)));
 				ordenMantenimiento.getActividades().add(act);
@@ -296,7 +294,7 @@ public class OrdenMantenimientoRepositorio implements IOrdenMantenimientoReposit
 					stmtActividad.setInt("pIdsgmv_orden_mantenimiento",
 							ordenMantenimiento.getIdsgmv_orden_mantenimiento());
 					stmtActividad.setString("pDescripcion", act.getDescripcion());
-					stmtActividad.setInt("pEjecutadoPor", act.getEjecutado_por().getIdsgmv_empleado());
+					stmtActividad.setInt("pEjecutadoPor", act.getEjecutado_por());
 					LocalDate dateProg = LocalDate.parse(act.getFecha_programacion(), formatter);
 					java.sql.Date sqlDateProg = java.sql.Date.valueOf(dateProg);
 					stmtActividad.setDate("pFechaProgramacion", sqlDateProg);
@@ -377,8 +375,7 @@ public class OrdenMantenimientoRepositorio implements IOrdenMantenimientoReposit
 	}
 
 	@Override
-	public List<OrdenMantenimiento> reporteOrdenesMantenimiento(FechaFilterBean filterBean)
-			throws Exception {
+	public List<OrdenMantenimiento> reporteOrdenesMantenimiento(FechaFilterBean filterBean) throws Exception {
 		Connection con = null;
 		List<OrdenMantenimiento> ordenesMantenimiento = new ArrayList<>();
 		try {
@@ -420,6 +417,82 @@ public class OrdenMantenimientoRepositorio implements IOrdenMantenimientoReposit
 			}
 		}
 		return ordenesMantenimiento;
+	}
+
+	@Override
+	public org.transport420.sgmv.model.reporte.OrdenMantenimiento exportarOrdenMantenimientoPDF(
+			int idsgmv_orden_mantenimiento) throws Exception {
+		Connection con = null;
+		org.transport420.sgmv.model.reporte.OrdenMantenimiento ordenMantenimiento = new org.transport420.sgmv.model.reporte.OrdenMantenimiento();
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		Calendar gmt = Calendar.getInstance(TimeZone.getTimeZone("GMT-5:00"));
+		try {
+			con = MySqlDAOFactory.obtenerConexion();
+			String query = "{CALL sql10257745.sp_exportar_orden_mantenimiento_pdf(?)}";
+			CallableStatement stmt = con.prepareCall(query);
+			stmt.setInt("pIdsgmv_orden_mantenimiento", idsgmv_orden_mantenimiento);
+			stmt.execute();
+
+			ResultSet rs = stmt.getResultSet();
+			while (rs.next()) {
+				ordenMantenimiento.setCod_mantenimiento_orden(rs.getString("cod_mantenimiento_orden"));
+				ordenMantenimiento.setTipo_mantenimiento(Util.getTipoMantenimiento(rs.getInt("tipo_mantenimiento")));
+				ordenMantenimiento.setPrioridad(Util.getPrioridad(rs.getInt("prioridad")));
+				ordenMantenimiento.setFecha(df.format(rs.getDate("fecha", gmt)));
+				ordenMantenimiento.setKilometraje("" + rs.getFloat("kilometraje"));
+				ordenMantenimiento.setPlaca_remolque(rs.getString("placa_tractor"));
+				ordenMantenimiento.setPlaca_semiremolque(rs.getString("placa_semitrailer"));
+				ordenMantenimiento.setObservaciones(rs.getString("observaciones"));
+			}
+			rs.close();
+
+			stmt.getMoreResults();
+
+			rs = stmt.getResultSet();
+			ordenMantenimiento.setActividades(new ArrayList<org.transport420.sgmv.model.reporte.Actividad>());
+			while (rs.next()) {
+				org.transport420.sgmv.model.reporte.Actividad act = new org.transport420.sgmv.model.reporte.Actividad();
+				act.setActividad(rs.getString("descripcion"));
+				act.setEjecutado_por(Util.getEjecutadoPor(rs.getInt("ejecutado_por")));
+				act.setFecha_programacion(df.format(rs.getDate("fecha_programacion", gmt)));
+				act.setFecha_ejecucion(df.format(rs.getDate("fecha_ejecucion", gmt)));
+				ordenMantenimiento.getActividades().add(act);
+			}
+
+			stmt.getMoreResults();
+
+			rs = stmt.getResultSet();
+			ordenMantenimiento.setDefectos(new ArrayList<org.transport420.sgmv.model.reporte.Defecto>());
+			while (rs.next()) {
+				org.transport420.sgmv.model.reporte.Defecto def = new org.transport420.sgmv.model.reporte.Defecto();
+				def.setDefecto(rs.getString("descripcion"));
+				def.setReportado_verificado_por(rs.getString("nombres") + " " + rs.getString("ape_paterno"));
+				def.setFecha_reporte(df.format(rs.getDate("fecha_reporte", gmt)));
+				def.setFecha_inspeccion(df.format(rs.getDate("fecha_inspeccion", gmt)));
+				ordenMantenimiento.getDefectos().add(def);
+			}
+
+			stmt.getMoreResults();
+
+			rs = stmt.getResultSet();
+			ordenMantenimiento.setEquipos(new ArrayList<org.transport420.sgmv.model.reporte.Equipo>());
+			while (rs.next()) {
+				org.transport420.sgmv.model.reporte.Equipo eqp = new org.transport420.sgmv.model.reporte.Equipo();
+				eqp.setEquipo(rs.getString("descripcion"));
+				eqp.setInspeccionado_por(rs.getString("nombres") + " " + rs.getString("ape_paterno"));
+				eqp.setOk(Util.getValorOK(rs.getInt("ok")));
+				ordenMantenimiento.getEquipos().add(eqp);
+			}
+			rs.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		} finally {
+			if (con != null) {
+				con.close();
+			}
+		}
+		return ordenMantenimiento;
 	}
 
 }
