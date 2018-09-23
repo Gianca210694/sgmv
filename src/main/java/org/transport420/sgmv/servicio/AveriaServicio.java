@@ -46,6 +46,7 @@ public class AveriaServicio {
 		try {
 			return reporteFallaRepositorio.listarAverias(filterBean);
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}
@@ -84,6 +85,7 @@ public class AveriaServicio {
 		try {
 			return reporteFallaRepositorio.obtenerAveria(idsgmv_reporte_falla);
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}
@@ -117,6 +119,7 @@ public class AveriaServicio {
 			}
 			return reporteFallaRepositorio.editarAveria(averia);
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}
@@ -176,12 +179,14 @@ public class AveriaServicio {
 						workBoook.write();
 						workBoook.close();
 					} catch (Exception e) {
+						System.out.println("error: " + e.getMessage());
 						throw new WebApplicationException(e);
 					}
 				}
 			};
 			return stream;
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}
@@ -223,12 +228,14 @@ public class AveriaServicio {
 						workBoook.write();
 						workBoook.close();
 					} catch (Exception e) {
+						System.out.println("error: " + e.getMessage());
 						throw new WebApplicationException(e);
 					}
 				}
 			};
 			return stream;
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}
@@ -270,6 +277,7 @@ public class AveriaServicio {
 			};
 			return stream;
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}

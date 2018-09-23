@@ -44,6 +44,7 @@ public class OrdenMantenimientoServicio {
 		try {
 			return ordenMantenimientoRepositorio.listarOrdenesMantenimiento(filterBean);
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}
@@ -52,6 +53,7 @@ public class OrdenMantenimientoServicio {
 		try {
 			return ordenMantenimientoRepositorio.crearOrdenMantenimiento(ordenMantenimiento);
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}
@@ -60,6 +62,7 @@ public class OrdenMantenimientoServicio {
 		try {
 			return ordenMantenimientoRepositorio.obtenerOrdenMantenimiento(idsgmv_orden_mantenimiento);
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}
@@ -68,6 +71,7 @@ public class OrdenMantenimientoServicio {
 		try {
 			return ordenMantenimientoRepositorio.editarOrdenMantenimiento(ordenMantenimiento);
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}
@@ -117,12 +121,14 @@ public class OrdenMantenimientoServicio {
 						workBoook.write();
 						workBoook.close();
 					} catch (Exception e) {
+						System.out.println("error: " + e.getMessage());
 						throw new WebApplicationException(e);
 					}
 				}
 			};
 			return stream;
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}
@@ -162,12 +168,14 @@ public class OrdenMantenimientoServicio {
 						JasperPrint jrPrint = JasperFillManager.fillReport(jr, parametros, jrDataSource);
 						JasperExportManager.exportReportToPdfStream(jrPrint, output);
 					} catch (Exception e) {
+						System.out.println("error: " + e.getMessage());
 						throw new WebApplicationException(e);
 					}
 				}
 			};
 			return stream;
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}

@@ -15,6 +15,7 @@ public class UsuarioServicio {
 		try {
 			return usuarioRepositorio.login(usuario);
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}

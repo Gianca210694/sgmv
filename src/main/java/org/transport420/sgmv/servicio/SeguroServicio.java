@@ -31,6 +31,7 @@ public class SeguroServicio {
 		try {
 			return seguroRepositorio.listarSeguros(filterBean);
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}
@@ -39,6 +40,7 @@ public class SeguroServicio {
 		try {
 			return seguroRepositorio.crearSeguro(seguro);
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}
@@ -47,6 +49,7 @@ public class SeguroServicio {
 		try {
 			return seguroRepositorio.obtenerSeguro(idsgmv_seguro);
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}
@@ -55,6 +58,7 @@ public class SeguroServicio {
 		try {
 			return seguroRepositorio.editarSeguro(seguro);
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}
@@ -108,12 +112,14 @@ public class SeguroServicio {
 						workBoook.write();
 						workBoook.close();
 					} catch (Exception e) {
+						System.out.println("error: " + e.getMessage());
 						throw new WebApplicationException(e);
 					}
 				}
 			};
 			return stream;
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}
@@ -122,6 +128,7 @@ public class SeguroServicio {
 		try {
 			return seguroRepositorio.vencerSeguros();
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}

@@ -15,6 +15,7 @@ public class ComponenteServicio {
 		try {
 			return componenteRepositorio.listarComponentesPrincipales();
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}
@@ -23,6 +24,7 @@ public class ComponenteServicio {
 		try {
 			return componenteRepositorio.listarComponentesLlantas();
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}

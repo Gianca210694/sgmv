@@ -32,6 +32,7 @@ public class EmpleadoServicio {
 		try {
 			return empleadoRepositorio.listarEmpleados(filterBean);
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}
@@ -40,6 +41,7 @@ public class EmpleadoServicio {
 		try {
 			return empleadoRepositorio.listarAdminJefeOp();
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}
@@ -48,6 +50,7 @@ public class EmpleadoServicio {
 		try {
 			return empleadoRepositorio.crearEmpleado(empleado);
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}
@@ -56,6 +59,7 @@ public class EmpleadoServicio {
 		try {
 			return empleadoRepositorio.obtenerEmpleado(idsgmv_empleado);
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}
@@ -64,6 +68,7 @@ public class EmpleadoServicio {
 		try {
 			return empleadoRepositorio.editarEmpleado(empleado);
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}
@@ -129,12 +134,14 @@ public class EmpleadoServicio {
 						workBoook.write();
 						workBoook.close();
 					} catch (Exception e) {
+						System.out.println("error: " + e.getMessage());
 						throw new WebApplicationException(e);
 					}
 				}
 			};
 			return stream;
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}

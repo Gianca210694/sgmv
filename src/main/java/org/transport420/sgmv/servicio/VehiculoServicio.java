@@ -32,6 +32,7 @@ public class VehiculoServicio {
 		try {
 			return vehiculoRepositorio.listarVehiculos(filterBean);
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}
@@ -40,6 +41,7 @@ public class VehiculoServicio {
 		try {
 			return vehiculoRepositorio.listarRemolques();
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}
@@ -48,6 +50,7 @@ public class VehiculoServicio {
 		try {
 			return vehiculoRepositorio.listarSemiremolques();
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}
@@ -56,6 +59,7 @@ public class VehiculoServicio {
 		try {
 			return vehiculoRepositorio.crearVehiculo(vehiculo);
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}
@@ -64,6 +68,7 @@ public class VehiculoServicio {
 		try {
 			return vehiculoRepositorio.obtenerVehiculo(idsgmv_vehiculo);
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}
@@ -72,6 +77,7 @@ public class VehiculoServicio {
 		try {
 			return vehiculoRepositorio.editarVehiculo(vehiculo);
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}
@@ -133,12 +139,14 @@ public class VehiculoServicio {
 						workBoook.write();
 						workBoook.close();
 					} catch (Exception e) {
+						System.out.println("error: " + e.getMessage());
 						throw new WebApplicationException(e);
 					}
 				}
 			};
 			return stream;
 		} catch (Exception e) {
+			System.out.println("error: " + e.getMessage());
 			return null;
 		}
 	}
