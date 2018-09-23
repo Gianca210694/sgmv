@@ -263,6 +263,7 @@ public class AveriaServicio {
 						JasperExportManager.exportReportToPdfStream(jrPrint, output);
 						//JasperExportManager.exportReportToPdfFile(jrPrint, "/Users/Giancarlo/Desktop/Plantillas/reporte.pdf");
 					} catch (Exception e) {
+						System.out.println("jasperError: " + e.getMessage());
 						throw new WebApplicationException(e);
 					}
 				}
