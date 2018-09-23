@@ -76,6 +76,13 @@ public class VehiculoResource {
 		return vehiculoServicio.editarVehiculo(vehiculo);
 	}
 
+	@PUT
+	@Path("/{vehiculoId}/{estado}")
+	public void cambiarEstado(@PathParam("vehiculoId") int vehiculoId, @PathParam("estado") int estado) {
+		vehiculoServicio.cambiarEstado(vehiculoId, estado);
+	}
+
+
 	@DELETE
 	@Path("/{vehiculoId}")
 	public void eliminarVehiculo(@PathParam("vehiculoId") int vehiculoId) {

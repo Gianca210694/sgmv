@@ -82,6 +82,15 @@ public class VehiculoServicio {
 		}
 	}
 
+	public void cambiarEstado(int idsgmv_vehiculo, int estado) {
+		try {
+			vehiculoRepositorio.cambiarEstado(idsgmv_vehiculo, estado);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+
 	public void eliminarVehiculo(int idsgmv_vehiculo) {
 		try {
 			vehiculoRepositorio.eliminarVehiculo(idsgmv_vehiculo);

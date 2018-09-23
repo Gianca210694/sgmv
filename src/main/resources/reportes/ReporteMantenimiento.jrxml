@@ -212,7 +212,7 @@
 			<textField isBlankWhenNull="true">
 				<reportElement x="481" y="31" width="64" height="12" uuid="8649335a-cc73-480d-8c52-2ca47ca90ddb"/>
 				<textElement>
-					<font fontName="DejaVu Sans" size="10"/>
+					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{fechaMantenimiento}]]></textFieldExpression>
 			</textField>
@@ -228,14 +228,14 @@
 				<textElement>
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
-				<text><![CDATA[Placa Trailer	:]]></text>
+				<text><![CDATA[Placa Remolque :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="10" y="30" width="90" height="12" uuid="9a35da17-198c-43be-9bc8-8974a0482916"/>
+				<reportElement x="10" y="30" width="120" height="12" uuid="9a35da17-198c-43be-9bc8-8974a0482916"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="10"/>
 				</textElement>
-				<text><![CDATA[Placa Semitrailer	:]]></text>
+				<text><![CDATA[Placa Semiremolque :]]></text>
 			</staticText>
 			<line>
 				<reportElement x="3" y="30" width="549" height="1" uuid="b2c22dca-eace-435e-80b6-9b707a3b0098"/>

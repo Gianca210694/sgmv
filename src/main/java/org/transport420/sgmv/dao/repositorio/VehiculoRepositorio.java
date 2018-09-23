@@ -248,6 +248,25 @@ public class VehiculoRepositorio implements IVehiculoRepositorio {
 	}
 
 	@Override
+	public void cambiarEstado(int idsgmv_vehiculo, int estado) throws Exception {
+		Connection con = null;
+		try {
+			con = MySqlDAOFactory.obtenerConexion();
+			String query = "{CALL sql10257745.sp_cambiar_estado_vehiculo(?, ?)}";
+			CallableStatement stmt = con.prepareCall(query);
+			stmt.setInt("pIdsgmv_vehiculo", idsgmv_vehiculo);
+			stmt.setInt("pEstado", estado);
+			stmt.execute();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			if (con != null) {
+				con.close();
+			}
+		}
+	}
+
+	@Override
 	public void eliminarVehiculo(int idsgmv_vehiculo) throws Exception {
 		Connection con = null;
 		try {

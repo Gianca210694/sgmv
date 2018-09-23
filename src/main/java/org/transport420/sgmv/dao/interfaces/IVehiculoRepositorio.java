@@ -20,6 +20,8 @@ public interface IVehiculoRepositorio {
 
 	public abstract Vehiculo editarVehiculo(Vehiculo vehiculo) throws Exception;
 
+	public void cambiarEstado(int idsgmv_vehiculo, int estado) throws Exception;
+
 	public abstract void eliminarVehiculo(int idsgmv_vehiculo) throws Exception;
 
 	public List<Vehiculo> exportarVehiculos(VehiculoReporteFilterBean filterBean) throws Exception;
