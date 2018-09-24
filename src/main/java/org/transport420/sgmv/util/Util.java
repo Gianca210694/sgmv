@@ -16,6 +16,7 @@ import org.transport420.sgmv.servicio.EmpleadoServicio;
 public class Util {
 
 	public static void enviarCorreo(String correos, String asunto, String mensaje) {
+		System.out.println("voy a mandar correo");
 		final String username = "Transport420add@gmail.com";
 		final String password = "admin_420";
 		Properties props = new Properties();

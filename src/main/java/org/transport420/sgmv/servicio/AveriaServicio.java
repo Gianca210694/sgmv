@@ -58,16 +58,21 @@ public class AveriaServicio {
 			float nuevoKm = remolque.getKilometraje_total() + averia.getKilometraje();
 			int multiploNuevoKm = 0, multiploKmVehiculo = 0;
 			if (remolque.getMarca().equals("SCANIA")) {
+				System.out.println("es scania");
 				multiploKmVehiculo = (int) (remolque.getKilometraje_total() / 15000);
 				multiploNuevoKm = (int) (nuevoKm / 15000);
 				cantidadKM = "15mil";
 			} else if (remolque.getMarca().equals("VOLVO")) {
+				System.out.println("es volvo");
 				multiploKmVehiculo = (int) (remolque.getKilometraje_total() / 15000);
 				multiploNuevoKm = (int) (nuevoKm / 30000);
 				cantidadKM = "30mil";
 			}
 
+			System.out.println("nuevo: " + multiploNuevoKm);
+			System.out.println("antiguo: " + multiploKmVehiculo);
 			if (multiploNuevoKm > multiploKmVehiculo) {
+				System.out.println("manda correo: " + multiploNuevoKm);
 				mensaje = "Matenimiento Preventivo:\n\nSu vehículo " + remolque.getMarca() + " " + remolque.getPlaca()
 						+ " llego a los " + cantidadKM + " Kilometros\r\n"
 						+ "Realizar el mantenimiento preventivo respectivo de:\r\n" + "	- Cambio de Aceite\r\n"
