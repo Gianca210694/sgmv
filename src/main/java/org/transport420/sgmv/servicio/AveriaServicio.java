@@ -64,13 +64,11 @@ public class AveriaServicio {
 				cantidadKM = "15mil";
 			} else if (remolque.getMarca().equals("VOLVO")) {
 				System.out.println("es volvo");
-				multiploKmVehiculo = (int) (remolque.getKilometraje_total() / 15000);
+				multiploKmVehiculo = (int) (remolque.getKilometraje_total() / 30000);
 				multiploNuevoKm = (int) (nuevoKm / 30000);
 				cantidadKM = "30mil";
 			}
 
-			System.out.println("nuevo: " + multiploNuevoKm);
-			System.out.println("antiguo: " + multiploKmVehiculo);
 			if (multiploNuevoKm > multiploKmVehiculo) {
 				System.out.println("manda correo: " + multiploNuevoKm);
 				mensaje = "Matenimiento Preventivo:\n\nSu vehículo " + remolque.getMarca() + " " + remolque.getPlaca()
