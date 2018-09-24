@@ -38,6 +38,7 @@ public class Util {
 			Transport.send(message);
 
 		} catch (Exception e) {
+			System.out.println("error correo: " + e.getMessage());
 			throw new RuntimeException(e);
 		}
 	}
